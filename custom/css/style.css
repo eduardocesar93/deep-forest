@@ -1,0 +1,97 @@
+.table-editable {
+	position: relative;
+}
+
+.table-editable .glyphicon {
+	font-size: 20px;
+}
+
+.table-remove {
+	color: #700;
+	cursor: pointer;
+}
+
+.table-remove:hover {
+	color: #f00;
+}
+
+.table-up, .table-down {
+	color: #007;
+	cursor: pointer;
+}
+
+.table-down {
+    margin-right:20px;
+}
+.table-up:hover, .table-down:hover {
+	color: #00f;
+}
+
+.save-list {
+	color: #070;
+	cursor: pointer;
+	top: 8px;
+	right: 0;
+    display: none;
+}
+
+.cancel-list {
+    color: #700;
+	cursor: pointer;
+	top: 8px;
+	right: 0;
+    margin-right: 5px;
+    display: none;
+}
+
+.span-save {
+    display: none;
+}
+
+.cancel-list:hover, {
+	color: #f00;
+}
+
+.save-msg {
+    font-size:10px;
+    color:green;
+}
+.table-add:hover {
+	color: #0b0;
+}
+
+.btn-centering {
+    padding-left: 10%
+}
+
+.btn-centering a{
+    margin: 30px;
+}
+
+.jumbotron{
+    margin-top: 120px;
+    margin-left:10%;
+    width:80%;
+    
+}
+
+#myModal{
+    width: 40%;
+    left: 30%;
+}
+
+.modal-dialog.modal-sm{
+    width: 100%;
+}
+
+.btn-position {
+    padding-left: 35%;
+}
+
+.close {
+    padding-right: 10px;
+}
+
+.alert {
+    border-radius: 5px 5px 5px 5px;
+}
