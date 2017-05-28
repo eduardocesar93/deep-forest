@@ -64,23 +64,23 @@
     padding-left: 10%
 }
 
-.btn-centering a{
+.btn-centering a {
     margin: 30px;
 }
 
-.jumbotron{
+.jumbotron {
     margin-top: 120px;
     margin-left:10%;
     width:80%;
-    
+
 }
 
-#myModal{
+#myModal {
     width: 40%;
     left: 30%;
 }
 
-.modal-dialog.modal-sm{
+.modal-dialog.modal-sm {
     width: 100%;
 }
 
