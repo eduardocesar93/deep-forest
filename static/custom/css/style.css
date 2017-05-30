@@ -95,3 +95,7 @@
 .alert {
     border-radius: 5px 5px 5px 5px;
 }
+
+.btn-responsive {
+    width: 22%;
+}

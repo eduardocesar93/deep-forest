@@ -6,23 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="Mobirise v3.12.1, mobirise.com">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="assets/images/farm-produce.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="static/assets/images/farm-produce.svg" type="image/x-icon">
     <meta name="description" content="Site Maker Description">
     <title>Site Maker Title</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;subset=latin">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="assets/bootstrap-material-design-font/css/material.css">
-    <link rel="stylesheet" href="assets/tether/tether.min.css">
+    <link rel="stylesheet" href="static/assets/bootstrap-material-design-font/css/material.css">
+    <link rel="stylesheet" href="static/assets/tether/tether.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/dropdown/css/style.css">
-    <link rel="stylesheet" href="assets/animate.css/animate.min.css">
-    <link rel="stylesheet" href="assets/theme/css/style.css">
-    <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
-    <link rel="stylesheet" href="custom/css/style.css">
-    <script src="assets/web/assets/jquery/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/assets/dropdown/css/style.css">
+    <link rel="stylesheet" href="static/assets/animate.css/animate.min.css">
+    <link rel="stylesheet" href="static/assets/theme/css/style.css">
+    <link rel="stylesheet" href="static/assets/mobirise/css/mbr-additional.css" type="text/css">
+    <link rel="stylesheet" href="static/assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/custom/css/style.css">
+    <script src="static/assets/web/assets/jquery/jquery.min.js"></script>
+    <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -32,8 +33,8 @@
                 <div class="mbr-table">
                     <div class="mbr-table-cell">
                         <div class="navbar-brand">
-                            <a href="index.html" class="navbar-logo"><img src="assets/images/farm-produce.svg" alt="Mobirise"></a>
-                            <a class="navbar-caption text-white" href="index.html">Deep Forest</a>
+                            <a href="/" class="navbar-logo"><img src="static/assets/images/farm-produce.svg" alt="Mobirise"></a>
+                            <a class="navbar-caption text-white" href="/">Deep Forest</a>
                         </div>
                     </div>
                     <div class="mbr-table-cell">
@@ -44,7 +45,7 @@
                             <li class="nav-item dropdown"><a class="nav-link link dropdown-toggle" data-toggle="dropdown-submenu" href="#" aria-expanded="false">Ajuda</a>
                                 <div class="dropdown-menu"><a class="dropdown-item" href="#" aria-expanded="false">Contato</a><a class="dropdown-item" href="#" aria-expanded="false">Tutorial</a></div>
                             </li>
-                            <li class="nav-item nav-btn"><a class="nav-link btn btn-white btn-white-outline" href="dashboard.html">Dashboard</a></li>
+                            <li class="nav-item nav-btn"><a class="nav-link btn btn-white btn-white-outline" href="dashboard">Dashboard</a></li>
                         </ul>
                         <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                         <div class="close-icon"></div>
@@ -63,69 +64,69 @@
                 <div class="alert alert-success alert-dismissable" style="display:none">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> O classificador foi adicionado à fila de treino.
                 </div>
+                <div class="alert alert-danger alert-dismissable alert-fail" style="display:none">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Ocorreu um erro na adição do classificador.
+                </div>
+                <div class="alert alert-danger alert-dismissable alert-delete" style="display:none">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> A senha do classificador está incorreta.
+                </div>
+                <span>
+                    <span class="span-save">Salvar Mudanças: &nbsp</span>
+                    <a href="#" class="change-save">
+                        <span class="cancel-list glyphicon glyphicon-remove"></span>
+                    </a>
+                    <a href="#" class="change-save">
+                        <span class="save-list glyphicon glyphicon-ok"></span>
+                    </a>
+                </span>
                 <div id="table" class="table-editable">
                     <span class="btn-centering">
-                        <a href="adicionarclassificador.html" class="btn btn-primary">Novo Cassificador</a>
-                        <a href="#" class="btn btn-primary">Novo Dataset</a>
-                        <a href="#" class="btn btn-primary">Visualização</a>
-                    </span>
-                    <span>
-                        <span class="span-save">Salvar Ordem: &nbsp</span>
-                        <a href="#" class="change-save">
-                            <span class="cancel-list glyphicon glyphicon-remove"></span>
-                        </a>
-                        <a href="#" class="change-save">
-                            <span class="save-list glyphicon glyphicon-ok"></span>
-                        </a>
+                        <a href="adicionar-classificador" class="btn btn-primary btn-responsive">Novo Cassificador</a>
+                        <a href="#" class="btn btn-primary btn-responsive">Novo Dataset</a>
+                        <a href="#" class="btn btn-primary btn-responsive">Visualização</a>
                     </span>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th hidden="hidden"></th>
+                                <th hidden="hidden">Id</th>
+                                <th hidden="hidden">Order</th>
                                 <th>Classificador</th>
                                 <th>Tipo</th>
                                 <th>Estado</th>
                                 <th>Acurácia</th>
+                                <th>Proteção</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for classifier in classifiers %}
                             <tr>
-                                <th hidden="hidden">0</th>
-                                <td contenteditable="true">Rede xpto</td>
-                                <td contenteditable="true">Rede Neural</td>
-                                <td contenteditable="true">Treinado</td>
-                                <td contenteditable="true">94%</td>
+                                <td hidden="hidden">{{ classifier.id }}</td>
+                                <th hidden="hidden"  value="{{ classifier.locked }}">{{ classifier.order_table }}</th>
+                                <td contenteditable="true">{{ classifier.name }}</td>
+                                <td contenteditable="false">{{ classifier.type_classifier }}</td>
+                                {% if classifier.state == 1 %}
+                                <td contenteditable="false">Em Treino</td>
+                                {% else %}
+                                <td contenteditable="false">Treinado</td>
+                                {% endif %}
+                                <td contenteditable="false">{{ classifier.accuracy }}</td>
+                                {% if classifier.password != "" %}
+                                <td contenteditable="false">
+                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                </td>
+                                {% else %}
+                                <td contenteditable="false">
+                                    <i class="fa fa-unlock" aria-hidden="true"></i>
+                                </td>
+                                {% endif %}
                                 <td>
                                     <span class="table-up glyphicon glyphicon-arrow-up"></span>
                                     <span class="table-down glyphicon glyphicon-arrow-down"></span>
                                     <span class="table-remove glyphicon glyphicon-trash"></span>
                                 </td>
                             </tr>
-                            <tr>
-                                <th hidden="hidden">1</th>
-                                <td contenteditable="true">Rede xpto2</td>
-                                <td contenteditable="true">Rede Neural</td>
-                                <td contenteditable="true">Em Treino</td>
-                                <td contenteditable="true">-</td>
-                                <td>
-                                    <span class="table-up glyphicon glyphicon-arrow-up"></span>
-                                    <span class="table-down glyphicon glyphicon-arrow-down"></span>
-                                    <span class="table-remove glyphicon glyphicon-trash"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th hidden="hidden">2</th>
-                                <td contenteditable="true">Rede xpto3</td>
-                                <td contenteditable="true">Rede Neural</td>
-                                <td contenteditable="true">Treinado</td>
-                                <td contenteditable="true">96%</td>
-                                <td>
-                                    <span class="table-up glyphicon glyphicon-arrow-up"></span>
-                                    <span class="table-down glyphicon glyphicon-arrow-down"></span>
-                                    <span class="table-remove glyphicon glyphicon-trash"></span>
-                                </td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -141,6 +142,11 @@
                     <div class="modal-body">
                         <p>Deseja deletar permanentemente o classificador <b><i><span class="modal-name"></span></i></b>?</p>
                     </div>
+                    <form>
+                        <div class="form-group">
+                            <input style="margin-left:10%; width:80%;" type="password" name="password" placeholder=" Senha"/>
+                        </div>
+                    </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         <a href="#" class="btn btn-primary confirm-delete">Confirmar</a>
@@ -154,13 +160,13 @@
             <p class="text-xs-center">Instituto Militar de Engenharia (IME) 2017</p>
         </div>
     </footer>
-    <script src="assets/tether/tether.min.js"></script>
-    <script src="assets/smooth-scroll/smooth-scroll.js"></script>
-    <script src="assets/dropdown/js/script.min.js"></script>
-    <script src="assets/touch-swipe/jquery.touch-swipe.min.js"></script>
-    <script src="assets/viewport-checker/jquery.viewportchecker.js"></script>
-    <script src="assets/theme/js/script.js"></script>
-    <script src="custom/js/dashboard.js"></script>
+    <script src="static/assets/tether/tether.min.js"></script>
+    <script src="static/assets/smooth-scroll/smooth-scroll.js"></script>
+    <script src="static/assets/dropdown/js/script.min.js"></script>
+    <script src="static/assets/touch-swipe/jquery.touch-swipe.min.js"></script>
+    <script src="static/assets/viewport-checker/jquery.viewportchecker.js"></script>
+    <script src="static/assets/theme/js/script.js"></script>
+    <script src="static/custom/js/dashboard.js"></script>
     <input name="animation" type="hidden">
 </body>
 </html>

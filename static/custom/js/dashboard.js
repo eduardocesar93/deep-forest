@@ -1,4 +1,5 @@
 var modalId = -1;
+var locked = 0;
 
 var adjustElements = function() {
     $rows = $('.table-editable tbody tr th');
@@ -31,8 +32,16 @@ var addEvents = function() {
     $('.table-remove').click(function() {
         modalId = $(this).parents('tr').index();
         $name = $('.table-editable tbody tr:eq(' + modalId + ') td:eq(0)');
+        locked = $('.table-editable tbody tr:eq(' + modalId + ') th:eq(0)').attr("value");
         $('.modal-name').html($name.html())
         $('#myModal').modal('toggle');
+        $("input[name=password]").val("");
+        if (locked == "0"){
+            $("input[name=password]").attr("disabled", true);
+        }
+        else{
+            $("input[name=password]").attr("disabled", false);
+        }
     });
 
     $('.table-up').click(function() {
@@ -53,11 +62,50 @@ var addEvents = function() {
         $('.save-list').show();
     });
 
+    $('.table-down').click(function() {
+        var $row = $(this).parents('tr');
+        if ($row.parent().children().length == $row.index() + 1) return;
+        $row.next().after($row.get(0));
+        $('.span-save').show();
+        $('.cancel-list').show();
+        $('.save-list').show();
+    });
+
+    $('td[contenteditable="true"]').bind("DOMSubtreeModified", function(){
+        $('.span-save').show();
+        $('.cancel-list').show();
+        $('.save-list').show();
+    });
+
     $('.save-list').click(function() {
         adjustElements();
         $('.span-save').hide();
         $('.cancel-list').hide();
         $('.save-list').hide();
+        var $rows = $("table").find('tr:not(:hidden)');
+        var headers = [];
+        var data = [];
+
+        $($rows[0]).find('th').each(function () {
+            headers.push($(this).text().toLowerCase());
+        });
+
+        headers = headers.slice(0, 3);
+        $rows = $rows.slice(1, $rows.length);
+        $rows.each(function () {
+            var $td = $(this).find('td, th');
+            var h = {};
+
+            headers.forEach(function (header, i) {
+              h[header] = $td.eq(i).text();
+            });
+
+            data.push(h);
+        });
+
+        $.ajax({
+            url: "/atualizar-classificadores?values=" + JSON.stringify(data)
+        });
     });
 
 
@@ -90,10 +138,25 @@ var QueryString = function() {
 addEvents();
 $('.confirm-delete').click(function() {
     $row = $('.table-editable tbody tr:eq(' + modalId + ')');
-    $row.detach();
-    $('#myModal').modal('toggle');
+    id = $row.find("td:eq(0)").html();
+    password = $("input[name=password]").val();
+    $.ajax({
+        url: "/deletar-classificador?id=" + id + "&password=" + password,
+    }).success(function(data){
+        if (data == "true"){
+            $row.detach();
+        }
+        else {
+            $(".alert-delete").show();
+        }
+        $('#myModal').modal('toggle');
+    });
 });
 
 if (QueryString.success && QueryString.success == "true") {
-    $(".alert").show();
+    $(".alert-success").show();
+}
+
+if (QueryString.fail && QueryString.fail == "true") {
+    $(".alert-fail").show();
 }
