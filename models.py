@@ -19,10 +19,23 @@ class Classifier(Base):
 
     def __repr__(self):
         return "<Classifier(name={0}, dataset={1}, type_classifier={2},\
-            optimization_method={3}, state={4})".format(
+            optimization_method={3}, state={4})>".format(
                 self.name, self.dataset,
                 self.type_classifier, self.optimization_method,
                 self.state)
+
+
+class Dataset(Base):
+    __tablename__ = "dataset"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    year = Column(Integer, nullable=False)
+    train = Column(Integer, nullable=False)
+
+    def __repr__(self):
+        return "<Dataset(name={0}, train={1})>".format(self.name, self.train)
+
 
 engine = create_engine("sqlite:///deep_forest.db")
 Base.metadata.create_all(engine)

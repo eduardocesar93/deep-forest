@@ -103,30 +103,9 @@ def atualizar_classificadores():
     return "true"
 
 
-@app.route('/upload', methods=['get'])
-def upload():
-    state = "danger"
-    message = "Um erro ocorreu ao fazer Upload do arquivo"
-
-    if 'file' in request.files:
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            state = "success"
-            message = "A questão foi salva com sucesso"
-    if 'question' in request.files:
-        file = request.files['question']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join('questions/', filename))
-            state = "success"
-            message = "A questão foi salva com sucesso"
-            flash(message, state)
-            return redirect(url_for('submeter'))
-
-    flash(message, state)
-    return redirect(url_for('submeter'))
+@app.route('/adicionar-dataset', methods=['POST', 'GET'])
+def adicionar_dataset():
+    return render_template('adicionardados.html')
 
 
 @app.route('/delete')
@@ -146,4 +125,5 @@ def download():
 if __name__ == "__main__":
     app.secret_key = 'FGV-EMAP 13410 Selva'
     app.config['SESSION_TYPE'] = 'filesystem'
-    app.run(host='0.0.0.0', port=port, debug=True)
+    # app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='192.168.25.177', port=9000, debug=False)

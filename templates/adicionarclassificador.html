@@ -61,11 +61,11 @@
             <form action="adicionar-classificador" method="post">
                 <div class="row">
                     <div class="col-xs-6 form-group">
-                        <label>Nome do Classificador</label>
+                        <label><b>Nome do Classificador</b></label>
                         <input name="name" class="form-control" type="text" required  oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')"/>
                     </div>
                     <div class="col-xs-6 form-group">
-                        <label>Tipo</label>
+                        <label><b>Tipo</b></label>
                             <select name="type_classifier" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
                             <option value="">Selecione</option>
                             <option value="Rede Neural MLP">Rede Neural MLP</option>
@@ -73,7 +73,7 @@
                         </select>
                     </div>
                     <div class="col-xs-6 form-group">
-                        <label>Dataset</label>
+                        <label><b>Dataset</b></label>
                         <select name="dataset" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
                         <option value="">Selecione</option>
                         <option value="1">Amazônia</option>
@@ -81,7 +81,7 @@
                     </select>
                     </div>
                     <div class="col-xs-6 form-group">
-                        <label>Otimização</label>
+                        <label><b>Otimização</b></label>
                         <select name="optimization_method" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
                             <option value="">Selecione</option>
                             <option value="1">AdaGrad</option>
@@ -89,7 +89,7 @@
                         </select>
                     </div>
                     <div class="col-xs-6 form-group">
-                        <label>Proteger</label><br/>
+                        <label><b>Proteger</b></label><br/>
                         <label class="radio-inline">
                             <input type="radio" name="password" value="yes">Sim
                         </label>
@@ -104,7 +104,7 @@
 
                     <div class="col-xs-6 form-group">
                     <fieldset disabled>
-                        <label>Senha</label>
+                        <label><b>Senha</b></label>
                         <input name="password_value" class="form-control" type="password" />
                     </fieldset>
                     </div>
@@ -112,19 +112,19 @@
                 <hr>
                 <div class="row">
                     <div class="col-xs-6 form-group">
-                        <label>Parâmetro 1</label>
+                        <label><b>Parâmetro 1</b></label>
                         <input class="form-control" type="text" />
                     </div>
                     <div class="col-xs-6 form-group">
-                        <label>Parâmetro 2</label>
+                        <label><b>Parâmetro 2</b></label>
                         <input class="form-control" type="text" />
                     </div>
                     <div class="col-xs-6 form-group">
-                        <label>Parâmetro 3</label>
+                        <label><b>Parâmetro 3</b></label>
                         <input class="form-control" type="text" />
                     </div>
                     <div class="col-xs-6 form-group">
-                        <label>Parâmetro 4</label>
+                        <label><b>Parâmetro 4</b></label>
                         <input class="form-control" type="text" />
                     </div>
                 </div>

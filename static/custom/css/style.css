@@ -99,3 +99,10 @@
 .btn-responsive {
     width: 22%;
 }
+
+.needsclick {
+	font-weight: 400;
+	text-align: center;
+	margin: 2em 0;
+	box-sizing: border-box;
+}

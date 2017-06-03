@@ -6,30 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="Mobirise v3.12.1, mobirise.com">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="assets/images/farm-produce.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="static/assets/images/farm-produce.svg" type="image/x-icon">
     <meta name="description" content="Site Maker Description">
     <title>Site Maker Title</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;subset=latin">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="assets/bootstrap-material-design-font/css/material.css">
-    <link rel="stylesheet" href="assets/tether/tether.min.css">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/dropdown/css/style.css">
-    <link rel="stylesheet" href="assets/animate.css/animate.min.css">
-    <link rel="stylesheet" href="assets/theme/css/style.css">
-    <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+    <link rel="stylesheet" href="static/assets/bootstrap-material-design-font/css/material.css">
+    <link rel="stylesheet" href="static/assets/tether/tether.min.css">
+    <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/assets/dropdown/css/style.css">
+    <link rel="stylesheet" href="static/assets/animate.css/animate.min.css">
+    <link rel="stylesheet" href="static/assets/theme/css/style.css">
+    <link rel="stylesheet" href="static/assets/mobirise/css/mbr-additional.css" type="text/css">
+    <link rel="stylesheet" href="static/custom/css/style.css" type="text/css">
+    <link rel="stylesheet" href="static/assets/font-awesome/css/font-awesome.min.css">
 </head>
 
 <body>
-    <section id="menu-a">
+    <section id="menu-d">
         <nav class="navbar navbar-dropdown bg-color transparent navbar-fixed-top">
             <div class="container">
                 <div class="mbr-table">
                     <div class="mbr-table-cell">
                         <div class="navbar-brand">
-                            <a href="https://mobirise.com" class="navbar-logo"><img src="assets/images/farm-produce.svg" alt="Mobirise"></a>
-                            <a class="navbar-caption text-white" href="https://mobirise.com">Deep Florest</a>
+                            <a href="/" class="navbar-logo"><img src="static/assets/images/farm-produce.svg" alt="DeepForest"></a>
+                            <a class="navbar-caption text-white" href="/">Deep Florest</a>
                         </div>
                     </div>
                     <div class="mbr-table-cell">
@@ -37,10 +39,10 @@
                         <div class="hamburger-icon"></div>
                     </button>
                         <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
-                            <li class="nav-item dropdown"><a class="nav-link link dropdown-toggle" data-toggle="dropdown-submenu" href="https://mobirise.com/" aria-expanded="false">AJUDA</a>
-                                <div class="dropdown-menu"><a class="dropdown-item" href="https://mobirise.com/" aria-expanded="false">Contato</a><a class="dropdown-item" href="https://mobirise.com/" aria-expanded="false">Tutorial</a></div>
+                            <li class="nav-item dropdown"><a class="nav-link link dropdown-toggle" data-toggle="dropdown-submenu" href="#" aria-expanded="false">Ajuda</a>
+                                <div class="dropdown-menu"><a class="dropdown-item" href="#" aria-expanded="false">Contato</a><a class="dropdown-item" href="#" aria-expanded="false">Tutorial</a></div>
                             </li>
-                            <li class="nav-item nav-btn"><a class="nav-link btn btn-white btn-white-outline" href="https://mobirise.com/">Dashboard</a></li>
+                            <li class="nav-item nav-btn"><a class="nav-link btn btn-white btn-white-outline" href="dashboard">Dashboard</a></li>
                         </ul>
                         <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
                         <div class="close-icon"></div>
@@ -50,35 +52,93 @@
             </div>
         </nav>
     </section>
-    <section class="engine"><a rel="external" href="https://mobirise.com">Mobirise</a></section>
-    <section class="mbr-section mbr-section-hero mbr-section-full mbr-section-with-arrow mbr-after-navbar" id="header5-c" style="background-color: rgb(61, 142, 185);">
-        <div class="mbr-table-cell">
-
-            <div class="container">
+    <section class="engine">
+        <a rel="external" href="#"></a>
+    </section>
+    <section class="mbr-section mbr-section-hero mbr-section-full mbr-section-with-arrow mbr-after-navbar" id="header5-f" style="background-color: rgb(61, 142, 185);">
+        <div class="jumbotron">
+            <form action="adicionar-classificador" method="post" id="file-dropzone" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="mbr-section col-md-10">
-                        <h1 class="mbr-section-title display-1">SOLID COLOR INTRO</h1>
-                        <p class="mbr-section-lead lead">Full screen intro with color background.<br>Buttons, text and title are aligned to the left.</p>
-                        <div class="mbr-section-btn"><a class="btn btn-lg btn-success" href="https://mobirise.com">DOWNLOAD NOW</a></div>
+                    <div class="col-xs-6 form-group">
+                        <label><b>Nome do Dataset</b></label>
+                        <input name="name" class="form-control" type="text" required  oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')"/>
+                        <label><b>Ano das Imagens e Anotações</b></label>
+                        <input name="year" class="form-control" type="number" required  oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')"/>
+                        <label><b>Arquivo com a imagem</b></label>
+                        <div class="input-group">
+							<label class="input-group-btn">
+								<span class="btn btn-info">
+									Upload <input type="file" name="question" style="display: none;">
+								</span>
+							</label>
+							<input type="text" class="form-control" disabled style="background: #f5f5f5;">
+                        </div>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                        <label><b>Treino</b></label><br/>
+                        <label class="radio-inline">
+                            <input type="radio" name="train" value="yes">Sim
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="train" checked="checked" value="no">Não
+                        </label>
+                        <br/>
+                        <label>
+                            <i class="fa fa-exclamation" aria-hidden="true" style="color:orange;"></i> Caso o dado seja utilizado para treino, ele deverá estar anotado.
+                        </label>
+                        <label><b>Arquivo com as anotações</b></label>
+                        <div class="input-group">
+							<label class="input-group-btn">
+								<span class="btn btn-info btn-labeled">
+									Upload <input type="file" name="question" style="display: none;" disabled class="labeled-data">
+								</span>
+							</label>
+							<input type="text" class="form-control" style="background: #f5f5f5;" disabled>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xs-6 form-group">
+                        <label class="btn-position">
+                            <a href="dashboard" class="btn btn-danger">Cancelar</a>
+                        </label>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                        <label class="btn-position">
+                            <input type="submit" class="btn btn-primary" value="Salvar">
+                        </label>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="mbr-arrow mbr-arrow-floating" aria-hidden="true"><a href="#next"><i class="mbr-arrow-icon"></i></a></div>
     </section>
-    <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-b" style="background-color: rgb(0, 0, 0); padding-top: 1.75rem; padding-bottom: 1.75rem;">
+    <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-e" style="background-color: rgb(0, 0, 0); padding-top: 1.75rem; padding-bottom: 1.75rem;">
         <div class="container">
-            <p class="text-xs-center">Copyright (c) 2017 IME.</p>
+            <p class="text-xs-center">Instituto Militar de Engenharia (IME) 2017</p>
         </div>
     </footer>
-    <script src="assets/web/assets/jquery/jquery.min.js"></script>
-    <script src="assets/tether/tether.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/smooth-scroll/smooth-scroll.js"></script>
-    <script src="assets/dropdown/js/script.min.js"></script>
-    <script src="assets/touch-swipe/jquery.touch-swipe.min.js"></script>
-    <script src="assets/viewport-checker/jquery.viewportchecker.js"></script>
-    <script src="assets/theme/js/script.js"></script>
+    <script src="static/assets/web/assets/jquery/jquery.min.js"></script>
+    <script src="static/assets/tether/tether.min.js"></script>
+    <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/assets/smooth-scroll/smooth-scroll.js"></script>
+    <script src="static/assets/dropdown/js/script.min.js"></script>
+    <script src="static/assets/touch-swipe/jquery.touch-swipe.min.js"></script>
+    <script src="static/assets/viewport-checker/jquery.viewportchecker.js"></script>
+    <script src="static/assets/theme/js/script.js"></script>
+    <script src="static/custom/js/dataset.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script type="text/javascript">
+        $(".select2").select2();
+        $("input:radio[name=train]").change(function () {
+            if ($("input[name='train']:checked").val() == 'yes') {
+                $(".labeled-data").prop("disabled", false);
+            }
+            if ($("input[name='train']:checked").val() == 'no') {
+                $(".labeled-data").prop("disabled", true);
+            }
+        });
+    </script>
     <input name="animation" type="hidden">
 </body>
 </html>
