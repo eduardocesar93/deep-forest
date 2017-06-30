@@ -66,28 +66,28 @@
                     </div>
                     <div class="col-xs-6 form-group">
                         <label><b>Tipo</b></label>
-                            <select name="type_classifier" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
+                        <select name="type_classifier" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
                             <option value="">Selecione</option>
                             <option value="Rede Neural MLP">Rede Neural MLP</option>
                             <option value="CNN">CNN</option>
                         </select>
                     </div>
                     <div class="col-xs-6 form-group">
-                        <label><b>Dataset</b></label>
-                        <select name="dataset" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
-                        <option value="">Selecione</option>
-                        {% for dataset in datasets %}
-                        <option value="{{ dataset.id }}">{{ dataset.name }}</option>
-                        {% endfor %}
-                    </select>
+                        <label><b>Dataset Início</b></label>
+                        <select name="dataset_first" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
+                            <option value="">Selecione</option>
+                            {% for dataset in datasets %}
+                            <option value="{{ dataset.id }}">{{ dataset.name }} - {{ dataset.year }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="col-xs-6 form-group">
-                        <label><b>Otimização</b></label>
-                        <select name="optimization_method" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
+                        <label><b>Dataset Fim</b></label>
+                        <select name="dataset_last" class="form-control optimization" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
                             <option value="">Selecione</option>
-
-                            <option value="1">AdaGrad</option>
-                            <option value="2">SGD</option>
+                            {% for dataset in datasets %}
+                            <option value="{{ dataset.id }}">{{ dataset.name }} - {{ dataset.year }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="col-xs-6 form-group">
@@ -103,31 +103,41 @@
                             <i class="fa fa-exclamation" aria-hidden="true" style="color:orange;"></i> Ao ativar a proteção, uma senha será exigida para excluir o classificador.
                         </label>
                     </div>
-
                     <div class="col-xs-6 form-group">
-                    <fieldset disabled>
-                        <label><b>Senha</b></label>
-                        <input name="password_value" class="form-control" type="password" />
-                    </fieldset>
+                        <fieldset disabled>
+                            <label><b>Senha</b></label>
+                            <input name="password_value" class="form-control" type="password" />
+                        </fieldset>
+                    </div>
+                    <div class="col-xs-6 form-group">
+                        <label><b>Otimização</b></label>
+                        <select name="optimization_method" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
+                            <option value="">Selecione</option>
+                            <option value="1">Adadelta</option>
+                            <option value="2">SGD</option>
+                        </select>
                     </div>
                 </div>
                 <hr>
-                <div class="row">
-                    <div class="col-xs-6 form-group">
-                        <label><b>Parâmetro 1</b></label>
-                        <input class="form-control" type="text" />
+                <div class="row param" hidde="hidden">
+                    <div class="col-xs-6 form-group sgd-param adadelta-param">
+                        <label><b>Número de Épocas</b></label>
+                        <input class="form-control" type="number" value="10"/>
                     </div>
-                    <div class="col-xs-6 form-group">
-                        <label><b>Parâmetro 2</b></label>
-                        <input class="form-control" type="text" />
+                    <div class="col-xs-6 form-group sgd-param adadelta-param">
+                        <label><b>Tamanho do Batch</b></label>
+                        <input class="form-control" type="number" value="128"/>
                     </div>
-                    <div class="col-xs-6 form-group">
-                        <label><b>Parâmetro 3</b></label>
-                        <input class="form-control" type="text" />
+                    <div class="col-xs-6 form-group sgd-param adadelta-param">
+                        <label><b>Função de Ativação</b></label>
+                        <select name="optimization_method" class="form-control" value="1">
+                            <option value="1">relu</option>
+                            <option value="2">softmax</option>
+                        </select>
                     </div>
-                    <div class="col-xs-6 form-group">
-                        <label><b>Parâmetro 4</b></label>
-                        <input class="form-control" type="text" />
+                    <div class="col-xs-6 form-group sgd-param">
+                        <label><b>Taxa de Aprendizagem</b></label>
+                        <input class="form-control" type="number" value="0.01"/>
                     </div>
                 </div>
                 <hr>
@@ -159,6 +169,7 @@
     <script src="static/assets/touch-swipe/jquery.touch-swipe.min.js"></script>
     <script src="static/assets/viewport-checker/jquery.viewportchecker.js"></script>
     <script src="static/assets/theme/js/script.js"></script>
+    <script src="static/custom/js/classifier.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script type="text/javascript">
         $(".select2").select2();

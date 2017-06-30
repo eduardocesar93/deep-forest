@@ -8,7 +8,8 @@ class Classifier(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    dataset = Column(Integer, ForeignKey("dataset.id"), nullable=False)
+    dataset_first = Column(Integer, ForeignKey("dataset.id"), nullable=False)
+    dataset_last = Column(Integer, ForeignKey("dataset.id"), nullable=False)
     type_classifier = Column(String, nullable=False)
     optimization_method = Column(Integer, nullable=False)
     state = Column(Integer, nullable=False)
@@ -20,7 +21,7 @@ class Classifier(Base):
     def __repr__(self):
         return "<Classifier(name={0}, dataset={1}, type_classifier={2},\
             optimization_method={3}, state={4})>".format(
-                self.name, self.dataset,
+                self.name, self.dataset_first,
                 self.type_classifier, self.optimization_method,
                 self.state)
 

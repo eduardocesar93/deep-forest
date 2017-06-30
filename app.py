@@ -105,7 +105,8 @@ def add_classifier():
                 password = request.form["password_value"]
             new_classifier = Classifier(
                 name=request.form['name'],
-                dataset=int(request.form['dataset']),
+                dataset_first=int(request.form['dataset_first']),
+                dataset_last=int(request.form['dataset_last']),
                 type_classifier=request.form['type_classifier'],
                 optimization_method=int(request.form['optimization_method']),
                 password=password,
