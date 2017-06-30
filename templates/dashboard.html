@@ -62,13 +62,13 @@
         <div class="jumbotron">
             <div class="container">
                 <div class="alert alert-success alert-dismissable" style="display:none">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> O classificador foi adicionado à fila de treino.
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> O registro foi adicionado com sucesso.
                 </div>
                 <div class="alert alert-danger alert-dismissable alert-fail" style="display:none">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Ocorreu um erro na adição do classificador.
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Ocorreu um erro ao salvar os dados.
                 </div>
                 <div class="alert alert-danger alert-dismissable alert-delete" style="display:none">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> A senha do classificador está incorreta.
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Ocorreu um erro na exclusão do item.
                 </div>
                 <span>
                     <span class="span-save">Salvar Mudanças: &nbsp</span>
@@ -79,11 +79,11 @@
                         <span class="save-list glyphicon glyphicon-ok"></span>
                     </a>
                 </span>
-                <div id="table" class="table-editable">
+                <div id="table" class="table-editable classifiers">
                     <span class="btn-centering">
-                        <a href="adicionar-classificador" class="btn btn-primary btn-responsive">Novo Cassificador</a>
-                        <a href="adicionar-dataset" class="btn btn-primary btn-responsive">Novo Dataset</a>
-                        <a href="#" class="btn btn-primary btn-responsive">Visualização</a>
+                        <a href="adicionar-classificador" class="btn btn-primary btn-responsive truncate">Novo Cassificador</a>
+                        <a href="adicionar-dataset" class="btn btn-primary btn-responsive truncate">Novo Dataset</a>
+                        <a href="#" class="btn btn-primary btn-responsive truncate">Visualização</a>
                     </span>
                     <table class="table">
                         <thead>
@@ -130,9 +130,43 @@
                         </tbody>
                     </table>
                 </div>
+                <br/>
+                <div class="table-editable datasets">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th hidden="hidden">Id</th>
+                                <th>Dataset</th>
+                                <th>Anotado</th>
+                                <th>Tamanho</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dataset in datasets %}
+                            <tr>
+                                <td hidden="hidden">{{ dataset.id }}</td>
+                                <td contenteditable="true">{{ dataset.name }}</td>
+                                {% if dataset.label_name != "" %}
+                                <td contenteditable="false">Sim</td>
+                                {% else %}
+                                <td contenteditable="false">Não</td>
+                                {% endif %}
+                                <td contenteditable="false">1</td>
+                                <td>
+                                    <a href="download-dataset?id={{ dataset.id }}" download>
+                                        <span class="glyphicon glyphicon-download-alt"></span>
+                                    </a>
+                                    <span class="table-remove glyphicon glyphicon-trash"></span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal fade classifiers" role="dialog">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -148,7 +182,24 @@
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-default btn-cancel " data-dismiss="modal">Fechar</button>
+                        <a href="#" class="btn btn-primary confirm-delete">Confirmar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade datasets" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Confirmação</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Deseja deletar permanentemente o dataset <b><i><span class="modal-name"></span></i></b>?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-cancel " data-dismiss="modal">Fechar</button>
                         <a href="#" class="btn btn-primary confirm-delete">Confirmar</a>
                     </div>
                 </div>

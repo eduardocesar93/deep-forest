@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy import Column, Integer, String, ForeignKey, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
@@ -8,7 +8,7 @@ class Classifier(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    dataset = Column(Integer, nullable=False)
+    dataset = Column(Integer, ForeignKey("dataset.id"), nullable=False)
     type_classifier = Column(String, nullable=False)
     optimization_method = Column(Integer, nullable=False)
     state = Column(Integer, nullable=False)
@@ -32,6 +32,8 @@ class Dataset(Base):
     name = Column(String, nullable=False)
     year = Column(Integer, nullable=False)
     train = Column(Integer, nullable=False)
+    image_name = Column(String, nullable=False)
+    label_name = Column(String, nullable=True)
 
     def __repr__(self):
         return "<Dataset(name={0}, train={1})>".format(self.name, self.train)

@@ -15,7 +15,7 @@
 	color: #f00;
 }
 
-.table-up, .table-down {
+.table-up, .table-down, .glyphicon-download-alt {
 	color: #007;
 	cursor: pointer;
 }
@@ -23,7 +23,7 @@
 .table-down {
     margin-right:20px;
 }
-.table-up:hover, .table-down:hover {
+.table-up:hover, .table-down:hover, .glyphicon-download-alt:hover {
 	color: #00f;
 }
 
@@ -75,7 +75,7 @@
 
 }
 
-#myModal {
+.modal {
     width: 40%;
     left: 30%;
 }
@@ -105,4 +105,35 @@
 	text-align: center;
 	margin: 2em 0;
 	box-sizing: border-box;
+}
+
+.truncate {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.btn-cancel {
+    margin: 0px;
+    background: #F0F0F0;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+#dashboard {
+    position: absolute;
+    top: 10%;
+    z-index: 99;
+    width: 20%;
+    height: 85%;
+    background-color: #f0f0f0;
+    float: right;
+    opacity: 0.3;
+    right: 5%;
+}
+#dashboard:hover {
+    opacity: 0.8;
 }

@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.ini
 
 # IDE related
 .idea/
@@ -12,5 +13,9 @@ bin/
 # Virtualenv
 venv/
 
-# dbs
+# Database
 *.sqlite
+
+# Image repository
+images/
+*.zip
