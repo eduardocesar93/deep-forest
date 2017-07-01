@@ -1,9 +1,11 @@
+# pylint: disable=C0111
+# pylint: disable=C0103
 from sqlalchemy import Column, Integer, String, ForeignKey, create_engine
 from sqlalchemy.ext.declarative import declarative_base
-Base = declarative_base()
+BASE = declarative_base()
 
 
-class Classifier(Base):
+class Classifier(BASE):
     __tablename__ = "classifier"
 
     id = Column(Integer, primary_key=True)
@@ -26,7 +28,7 @@ class Classifier(Base):
                 self.state)
 
 
-class Dataset(Base):
+class Dataset(BASE):
     __tablename__ = "dataset"
 
     id = Column(Integer, primary_key=True)
@@ -40,5 +42,5 @@ class Dataset(Base):
         return "<Dataset(name={0}, train={1})>".format(self.name, self.train)
 
 
-engine = create_engine("sqlite:///deep_forest.db")
-Base.metadata.create_all(engine)
+ENGINE = create_engine("sqlite:///deep_forest.db")
+BASE.metadata.create_all(ENGINE)

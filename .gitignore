@@ -9,6 +9,7 @@ obj/
 bin/
 *.config
 *.pyproj
+.vscode/
 
 # Virtualenv
 venv/
