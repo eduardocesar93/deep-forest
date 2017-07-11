@@ -40,7 +40,8 @@
                     </button>
                         <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
                             <li class="nav-item dropdown"><a class="nav-link link dropdown-toggle" data-toggle="dropdown-submenu" href="#" aria-expanded="false">Ajuda</a>
-                                <div class="dropdown-menu"><a class="dropdown-item" href="#" aria-expanded="false">Contato</a><a class="dropdown-item" href="#" aria-expanded="false">Tutorial</a></div>
+                                <div class="dropdown-menu"><a class="dropdown-item" href="#" aria-expanded="false">Contato</a><a class="dropdown-item"
+                                        href="#" aria-expanded="false">Tutorial</a></div>
                             </li>
                             <li class="nav-item nav-btn"><a class="nav-link btn btn-white btn-white-outline" href="dashboard">Dashboard</a></li>
                         </ul>
@@ -56,25 +57,26 @@
         <a rel="external" href="#"></a>
     </section>
     <section class="mbr-section mbr-section-hero mbr-section-full mbr-section-with-arrow mbr-after-navbar" id="header5-f" style="background-color: rgb(61, 142, 185);">
-        <div style="width:1000px; height:800px;">
-        <div id="map"></div>
-		<!--<div id="dashboard">
-			<h3 style="margin-left:5%;">Disease</h3>
-			<div class="checkbox zika">
-			  <label><input type="checkbox" value="" class="zikac" style="color:red;">Zika</label>
-			</div>
-			<div class="checkbox  dengue">
-			  <label><input type="checkbox" value="" class="denguec">Dengue</label>
-			</div>
-			<div class="checkbox chicku">
-			  <label><input type="checkbox" value="" class="chikuc">Chikungunya</label>
-			</div>
-			<br/>
-			<br/>
-			<h3 style="margin-left:5%;">Animation</h3><a href="#" class="btn btn-primary" id="animation" style="margin-left:10%;">Start</a>
-			<p style="margin-left:10%;"><b>Data</b></p><p id="date-zika" style="margin-left:10%;"></p>
-		</div>-->
-    </div>
+        <div style="width:100%; height:100%;">
+            <div id="map"></div>
+            <div id="dashboard">
+                <h3 style="margin-left:10%; margin-top:10px;"></h3>
+                <div class="checkbox zika">
+                    <label><input type="checkbox" value="" class="zikac" style="color:red;">Zika</label>
+                </div>
+                <div class="checkbox  dengue">
+                    <label><input type="checkbox" value="" class="denguec">Dengue</label>
+                </div>
+                <div class="checkbox chicku">
+                    <label><input type="checkbox" value="" class="chikuc">Chikungunya</label>
+                </div>
+                <br/>
+                <br/>
+                <h3 style="margin-left:5%;">Animation</h3><a href="#" class="btn btn-primary" id="animation" style="margin-left:10%;">Start</a>
+                <p style="margin-left:10%;"><b>Data</b></p>
+                <p id="date-zika" style="margin-left:10%;"></p>
+            </div>
+        </div>
     </section>
     <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-e" style="background-color: rgb(0, 0, 0); padding-top: 1.75rem; padding-bottom: 1.75rem;">
         <div class="container">
@@ -90,7 +92,8 @@
     <script src="static/assets/viewport-checker/jquery.viewportchecker.js"></script>
     <script src="static/assets/theme/js/script.js"></script>
     <script src="static/custom/js/visualizacao.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJzV6SR0atwcFp9HqcmECHChfptreNFOs&callback=myMap" type="text/javascript"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCT7Lpq6coge9vInGlwSe1SVkeb_NdvNVQ&callback=initMap"></script>
     <input name="animation" type="hidden">
 </body>
+
 </html>

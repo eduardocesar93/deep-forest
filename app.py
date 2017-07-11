@@ -14,8 +14,8 @@ UPLOAD_FOLDER = 'images/'
 ALLOWED_EXTENSIONS = set(['tif', 'tiff'])
 
 PORT = int(os.getenv('VCAP_APP_PORT', 8080))
-APP = Flask(__name__)
-APP.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ENGINE = create_engine("sqlite:///deep_forest.db", echo=True)
 BASE.metadata.bind = ENGINE
@@ -23,6 +23,15 @@ SESSION = sessionmaker(bind=ENGINE)()
 
 def secure_filename(filename):
     return filename # TODO
+
+
+def create_folders_if_not_exist():
+    if not os.path.exists(UPLOAD_FOLDER):
+        os.makedirs(UPLOAD_FOLDER)
+    if not os.path.exists(UPLOAD_FOLDER + '/labels'):
+        os.makedirs(UPLOAD_FOLDER + '/labels') 
+    if not os.path.exists('temp'):
+        os.makedirs('temp')
 
 
 def allowed_file(filename):
@@ -40,12 +49,12 @@ def current_milli_time():
     return int(round(time.time() * 1000))
 
 
-@APP.route("/")
+@app.route("/")
 def index():
     return render_template('index.html')
 
 
-@APP.route("/deletar-classificador")
+@app.route("/deletar-classificador")
 def delete_classifier():
     id_value = request.args.get('id')
     classifier = SESSION.query(Classifier).filter_by(id=int(id_value)).first()
@@ -61,7 +70,7 @@ def delete_classifier():
         return "false"
 
 
-@APP.route("/deletar-dataset")
+@app.route("/deletar-dataset")
 def delete_dataset():
     id_value = request.args.get('id')
     dataset = SESSION.query(Dataset).filter_by(id=int(id_value)).first()
@@ -79,7 +88,7 @@ def delete_dataset():
         return "false"
 
 
-@APP.route("/dashboard")
+@app.route("/dashboard")
 def dashboard():
     classifiers = SESSION.query(Classifier).order_by('order_table').all()
     datasets = SESSION.query(Dataset).all()
@@ -92,12 +101,12 @@ def dashboard():
                            datasets=datasets)
 
 
-@APP.route("/visualizacao")
+@app.route("/visualizacao")
 def visualization():
     return render_template('visualizacao.html')
 
 
-@APP.route("/adicionar-classificador", methods=['POST', 'GET'])
+@app.route("/adicionar-classificador", methods=['POST', 'GET'])
 def add_classifier():
     if request.method == 'POST':
         try:
@@ -127,7 +136,7 @@ def add_classifier():
                                datasets=datasets)
 
 
-@APP.route("/atualizar-classificadores")
+@app.route("/atualizar-classificadores")
 def update_classifiers():
     classifiers = request.args.get('classifiers')
     classifiers_dict = json.loads(classifiers)
@@ -153,7 +162,7 @@ def update_classifiers():
     return "true"
 
 
-@APP.route('/adicionar-dataset', methods=['POST', 'GET'])
+@app.route('/adicionar-dataset', methods=['POST', 'GET'])
 def add_dataset():
     if request.method == 'POST':
         try:
@@ -197,7 +206,7 @@ def add_dataset():
         return render_template('adicionardados.html')
 
 
-@APP.route('/download-dataset')
+@app.route('/download-dataset')
 def download_dataset():
     id_value = request.args.get('id')
     dataset = SESSION.query(Dataset).filter_by(id=int(id_value)).first()
@@ -214,7 +223,8 @@ def download_dataset():
 
 
 if __name__ == "__main__":
-    APP.secret_key = 'FGV-EMAP 13410 Selva'
-    APP.config['SESSION_TYPE'] = 'filesystem'
-    APP.run(host='0.0.0.0', port=9090, debug=False)
+    create_folders_if_not_exist()    
+    app.secret_key = 'FGV-EMAP 13410 Selva'
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.run(host='0.0.0.0', port=9090, debug=False)
     # APP.run(host='192.168.25.177', port=9000, debug=False)
