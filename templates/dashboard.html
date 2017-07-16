@@ -43,7 +43,8 @@
                     </button>
                         <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
                             <li class="nav-item dropdown"><a class="nav-link link dropdown-toggle" data-toggle="dropdown-submenu" href="#" aria-expanded="false">Ajuda</a>
-                                <div class="dropdown-menu"><a class="dropdown-item" href="#" aria-expanded="false">Contato</a><a class="dropdown-item" href="#" aria-expanded="false">Tutorial</a></div>
+                                <div class="dropdown-menu"><a class="dropdown-item" href="#" aria-expanded="false">Contato</a><a class="dropdown-item"
+                                        href="#" aria-expanded="false">Tutorial</a></div>
                             </li>
                             <li class="nav-item nav-btn"><a class="nav-link btn btn-white btn-white-outline" href="dashboard">Dashboard</a></li>
                         </ul>
@@ -62,20 +63,23 @@
         <div class="jumbotron">
             <div class="container">
                 <div class="alert alert-success alert-dismissable" style="display:none">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> O registro foi adicionado com sucesso.
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> O registro foi adicionado
+                    com sucesso.
                 </div>
                 <div class="alert alert-danger alert-dismissable alert-fail" style="display:none">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Ocorreu um erro ao salvar os dados.
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Ocorreu um erro ao salvar
+                    os dados.
                 </div>
                 <div class="alert alert-danger alert-dismissable alert-delete" style="display:none">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Ocorreu um erro na exclusão do item.
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> Ocorreu um erro na exclusão
+                    do item.
                 </div>
                 <span>
                     <span class="span-save">Salvar Mudanças: &nbsp</span>
-                    <a href="#" class="change-save">
+                <a href="#" class="change-save">
                         <span class="cancel-list glyphicon glyphicon-remove"></span>
                     </a>
-                    <a href="#" class="change-save">
+                <a href="#" class="change-save">
                         <span class="save-list glyphicon glyphicon-ok"></span>
                     </a>
                 </span>
@@ -83,7 +87,7 @@
                     <span class="btn-centering">
                         <a href="adicionar-classificador" class="btn btn-primary btn-responsive truncate">Novo Cassificador</a>
                         <a href="adicionar-dataset" class="btn btn-primary btn-responsive truncate">Novo Dataset</a>
-                        <a href="#" class="btn btn-primary btn-responsive truncate">Visualização</a>
+                        <a href="visualizacao" class="btn btn-primary btn-responsive truncate">Visualização</a>
                     </span>
                     <table class="table">
                         <thead>
@@ -102,7 +106,7 @@
                             {% for classifier in classifiers %}
                             <tr>
                                 <td hidden="hidden">{{ classifier.id }}</td>
-                                <th hidden="hidden"  value="{{ classifier.locked }}">{{ classifier.order_table }}</th>
+                                <th hidden="hidden" value="{{ classifier.locked }}">{{ classifier.order_table }}</th>
                                 <td contenteditable="true">{{ classifier.name }}</td>
                                 <td contenteditable="false">{{ classifier.type_classifier }}</td>
                                 {% if classifier.state == 1 %}
@@ -178,7 +182,7 @@
                     </div>
                     <form>
                         <div class="form-group">
-                            <input style="margin-left:10%; width:80%;" type="password" name="password" placeholder=" Senha"/>
+                            <input style="margin-left:10%; width:80%;" type="password" name="password" placeholder=" Senha" />
                         </div>
                     </form>
                     <div class="modal-footer">
@@ -220,4 +224,5 @@
     <script src="static/custom/js/dashboard.js"></script>
     <input name="animation" type="hidden">
 </body>
+
 </html>

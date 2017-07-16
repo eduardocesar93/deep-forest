@@ -103,7 +103,21 @@ def dashboard():
 
 @app.route("/visualizacao")
 def visualization():
-    return render_template('visualizacao.html')
+    classifiers = SESSION.query(Classifier)\
+        .filter(Classifier.state == 1)\
+        .order_by('order_table').all()
+
+    all_datasets = SESSION.query(Dataset)\
+        .order_by('name').all()
+
+    labeled_datasets = SESSION.query(Dataset)\
+        .filter(Dataset.train == 1)\
+        .all()
+
+    print(all_datasets)
+
+    return render_template('visualizacao.html', classifiers=classifiers,
+        all_datasets=all_datasets, labeled_datasets=labeled_datasets)
 
 
 @app.route("/adicionar-classificador", methods=['POST', 'GET'])

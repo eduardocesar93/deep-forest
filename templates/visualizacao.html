@@ -57,24 +57,30 @@
         <a rel="external" href="#"></a>
     </section>
     <section class="mbr-section mbr-section-hero mbr-section-full mbr-section-with-arrow mbr-after-navbar" id="header5-f" style="background-color: rgb(61, 142, 185);">
-        <div style="width:100%; height:100%;">
+        <div id="map-box">
             <div id="map"></div>
             <div id="dashboard">
-                <h3 style="margin-left:10%; margin-top:10px;"></h3>
-                <div class="checkbox zika">
-                    <label><input type="checkbox" value="" class="zikac" style="color:red;">Zika</label>
+                <h3 style="margin-left:17%; margin-top:10px;">Datasets Anotados</h3>
+                {% for dataset in labeled_datasets %}
+                <div class="dataset-cover">
+                    <label><input type="checkbox" value="{{ dataset.id }}" class="dataset-check">{{ dataset.name }}</label>
                 </div>
-                <div class="checkbox  dengue">
-                    <label><input type="checkbox" value="" class="denguec">Dengue</label>
+                {% endfor %}
+                <h3 style="margin-left:7%; margin-top:10px;">Classificadores</h3>
+                {% for classifier in classifiers %}
+                <div class="classifier-cover">
+                    <label><input type="checkbox" value="{{ classifier.id }}" class="classifier-check">{{ classifier.name }}</label>
                 </div>
-                <div class="checkbox chicku">
-                    <label><input type="checkbox" value="" class="chikuc">Chikungunya</label>
-                </div>
+                {% endfor %}
+                <select name="dataset_last" class="form-control optimization" style="width:93%;">
+                    <option value="0">Selecione o Dataset</option>
+                {% for dataset in all_datasets %}
+                    <option value="{{ dataset.id }}">{{ dataset.name }}</option>
+                {% endfor %}
+                </select>
                 <br/>
                 <br/>
-                <h3 style="margin-left:5%;">Animation</h3><a href="#" class="btn btn-primary" id="animation" style="margin-left:10%;">Start</a>
-                <p style="margin-left:10%;"><b>Data</b></p>
-                <p id="date-zika" style="margin-left:10%;"></p>
+                <a href="#" class="btn btn-primary" id="animation" style="margin-left:17%;">Aplicar</a>
             </div>
         </div>
     </section>
