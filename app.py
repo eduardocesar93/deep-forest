@@ -9,6 +9,7 @@ from flask import Flask, request, redirect, url_for,\
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import BASE, Classifier, Dataset
+import utils
 
 UPLOAD_FOLDER = 'images/'
 ALLOWED_EXTENSIONS = set(['tif', 'tiff'])
@@ -194,6 +195,7 @@ def add_dataset():
             image_name = secure_filename("{0}-{1}".format(current_time,
                                                           image.filename))
             image.save(os.path.join(UPLOAD_FOLDER, image_name))
+            utils.save_image(os.path.join(UPLOAD_FOLDER, image_name), "image")
             if train == 1:
                 label_image = request.files['label']
                 label_name = secure_filename("{0}-{1}"
@@ -240,5 +242,5 @@ if __name__ == "__main__":
     create_folders_if_not_exist()    
     app.secret_key = 'FGV-EMAP 13410 Selva'
     app.config['SESSION_TYPE'] = 'filesystem'
-    app.run(host='0.0.0.0', port=9090, debug=False)
+    app.run(host='0.0.0.0', port=8080, debug=False)
     # APP.run(host='192.168.25.177', port=9000, debug=False)

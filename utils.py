@@ -9,6 +9,22 @@ import PIL
 
 separate_width = 500 
 length_classification = 20
+data_path = "/images"
+
+
+def save_image(path, prefix):
+    """
+        Cut and save a tiff image given the image path
+        and the prefix ('image', tree_cover').
+    """
+    image = tifffile.imread(path)
+    try:
+        os.makedirs("{0}/{1}/".\
+                    format(data_path, prefix))
+    except FileExistsError:
+        pass 
+    cut_and_save(data_path, "first", image, separate_matrix)
+
 
 def cut_and_save(directory, name, matrix, length):
     try:
@@ -29,7 +45,7 @@ def cut_and_save(directory, name, matrix, length):
                                 j * length : j * length + length]
             np.save("{0}/numpy_files/{1}/{2}-{3}-{4}.npy".\
                     format(data_path, directory, name, i, j),
-                        sub_matrix)
+                    sub_matrix)
 
 
 def separate_matrix(matrix, length):
@@ -41,6 +57,7 @@ def separate_matrix(matrix, length):
                                 j * length : j * length + length]
             list_matrix.append(sub_matrix)
     return list_matrix
+
 
 def open_images(directory, name, total, length,
                 percent=[0,100], label=False):
