@@ -9,7 +9,7 @@ import PIL
 
 separate_width = 500 
 length_classification = 20
-data_path = "/images"
+data_path = "images"
 
 
 def save_image(path, prefix):
@@ -22,8 +22,8 @@ def save_image(path, prefix):
         os.makedirs("{0}/{1}/".\
                     format(data_path, prefix))
     except FileExistsError:
-        pass 
-    cut_and_save(data_path, "first", image, separate_matrix)
+        pass
+    cut_and_save(data_path, "first", image, separate_width)
 
 
 def cut_and_save(directory, name, matrix, length):
@@ -38,7 +38,7 @@ def cut_and_save(directory, name, matrix, length):
     except FileExistsError:
         pass
     
-    limit = int(len(matrix) / length)
+    limit = max(1, int(len(matrix) / length))
     for i in range(limit):
         for j in range(limit):
             sub_matrix = matrix[i * length : i * length + length,
