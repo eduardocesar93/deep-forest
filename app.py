@@ -132,7 +132,6 @@ def add_classifier():
             new_classifier = Classifier(
                 name=request.form['name'],
                 dataset_first=int(request.form['dataset_first']),
-                dataset_last=int(request.form['dataset_last']),
                 type_classifier=request.form['type_classifier'],
                 optimization_method=int(request.form['optimization_method']),
                 password=password,

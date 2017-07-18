@@ -82,15 +82,14 @@
                         </select>
                     </div>
                     <div class="col-xs-6 form-group">
-                        <label><b>Dataset Fim</b></label>
-                        <select name="dataset_last" class="form-control optimization" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
+                        <label><b>Otimização</b></label>
+                        <select name="optimization_method" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
                             <option value="">Selecione</option>
-                            {% for dataset in datasets %}
-                            <option value="{{ dataset.id }}">{{ dataset.name }} - {{ dataset.year }}</option>
-                            {% endfor %}
+                            <option value="1">Adadelta</option>
+                            <option value="2">SGD</option>
                         </select>
                     </div>
-                    <div class="col-xs-6 form-group">
+                                        <div class="col-xs-6 form-group">
                         <label><b>Proteger</b></label><br/>
                         <label class="radio-inline">
                             <input type="radio" name="password" value="yes">Sim
@@ -108,14 +107,6 @@
                             <label><b>Senha</b></label>
                             <input name="password_value" class="form-control" type="password" />
                         </fieldset>
-                    </div>
-                    <div class="col-xs-6 form-group">
-                        <label><b>Otimização</b></label>
-                        <select name="optimization_method" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
-                            <option value="">Selecione</option>
-                            <option value="1">Adadelta</option>
-                            <option value="2">SGD</option>
-                        </select>
                     </div>
                 </div>
                 <hr>

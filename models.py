@@ -11,7 +11,6 @@ class Classifier(BASE):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     dataset_first = Column(Integer, ForeignKey("dataset.id"), nullable=False)
-    dataset_last = Column(Integer, ForeignKey("dataset.id"), nullable=False)
     type_classifier = Column(String, nullable=False)
     optimization_method = Column(Integer, nullable=False)
     state = Column(Integer, nullable=False)
