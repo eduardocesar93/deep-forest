@@ -195,7 +195,6 @@ def add_dataset():
             image_name = secure_filename("{0}-{1}".format(current_time,
                                                           image.filename))
             image.save(os.path.join(UPLOAD_FOLDER, image_name))
-            utils.save_image(os.path.join(UPLOAD_FOLDER, image_name), "image")
             if train == 1:
                 label_image = request.files['label']
                 label_name = secure_filename("{0}-{1}"
@@ -203,8 +202,9 @@ def add_dataset():
                                                      label_image.filename))
                 if label_name == "":
                     raise Exception("No Image Exception")
-                label_image.save(os.path.join(UPLOAD_FOLDER + '/labels',
-                                              label_name))
+                label_path = os.path.join(UPLOAD_FOLDER + '/labels',
+                                              label_name)
+                label_image.save(label_path)
             else:
                 label_name = ""
             new_dataset = Dataset(
@@ -215,8 +215,12 @@ def add_dataset():
                 label_name=label_name)
             SESSION.add(new_dataset)
             SESSION.commit()
+            if train:
+                utils.save_image(label_path, "tree_cover", new_dataset.id)
+            utils.save_image(os.path.join(UPLOAD_FOLDER, image_name), "image", new_dataset.id)    
             return redirect(url_for('dashboard', success='true'))
-        except:
+        except Exception as err:
+            raise(err)
             return redirect(url_for('dashboard', fail='true'))
     else:
         return render_template('adicionardados.html')
@@ -242,5 +246,5 @@ if __name__ == "__main__":
     create_folders_if_not_exist()    
     app.secret_key = 'FGV-EMAP 13410 Selva'
     app.config['SESSION_TYPE'] = 'filesystem'
-    app.run(host='0.0.0.0', port=8080, debug=False)
+    app.run(host='0.0.0.0', port=8080, debug=True)
     # APP.run(host='192.168.25.177', port=9000, debug=False)

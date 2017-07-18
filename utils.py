@@ -12,39 +12,30 @@ length_classification = 20
 data_path = "images"
 
 
-def save_image(path, prefix):
+def save_image(path, prefix, id):
     """
         Cut and save a tiff image given the image path
         and the prefix ('image', tree_cover').
     """
     image = tifffile.imread(path)
-    try:
-        os.makedirs("{0}/{1}/".\
-                    format(data_path, prefix))
-    except FileExistsError:
-        pass
-    cut_and_save(data_path, "first", image, separate_width)
+    cut_and_save(data_path, "{0}-{1}".format(prefix, id), image, separate_width)
 
 
 def cut_and_save(directory, name, matrix, length):
+    print("{0}/numpy_files/".\
+                    format(directory))
     try:
         os.makedirs("{0}/numpy_files/".\
-                    format(data_path))
+                    format(directory))
     except FileExistsError:
-        pass 
-    try:
-        os.makedirs("{0}/numpy_files/{1}".\
-                    format(data_path, directory))
-    except FileExistsError:
-        pass
-    
+        pass     
     limit = max(1, int(len(matrix) / length))
     for i in range(limit):
         for j in range(limit):
             sub_matrix = matrix[i * length : i * length + length,
                                 j * length : j * length + length]
-            np.save("{0}/numpy_files/{1}/{2}-{3}-{4}.npy".\
-                    format(data_path, directory, name, i, j),
+            np.save("{0}/numpy_files/{1}-{2}-{3}.npy".\
+                    format(data_path, name, i, j),
                     sub_matrix)
 
 
