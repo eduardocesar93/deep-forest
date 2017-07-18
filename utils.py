@@ -4,6 +4,7 @@ import scipy.ndimage
 import tifffile 
 import os
 import PIL
+import fnmatch
 
 
 separate_width = 500 
@@ -49,16 +50,32 @@ def separate_matrix(matrix, length):
     return list_matrix
 
 
-def open_images(directory, name, total, length,
-                percent=[0,100], label=False):
+def find(pattern, path):
+    """
+        Return a list containing all files that matches the pattern in
+        a given directory
+    """
+    result = []
+    for root, dirs, files in os.walk(path):
+        for name in files:
+            if fnmatch.fnmatch(name, pattern):
+                result.append(os.path.join(root, name))
+    return result
+
+def open_images(id, length, percent=[0,100], label=True):
     list_matrix = list()
+    prefix = "image" if label == False else "tree_cover"
+    total = int(math.sqrt(len(find("{0}-{1}-*".format(prefix, id), \
+    "{0}/numpy_files/".format(data_path)))))
     limit_min = int(total * percent[0] * 1.0 / 100)
     limit_max = int(total * percent[1] * 1.0 / 100)
+    
     for i in range(limit_min, limit_max):
         for j in range(total):
+               
             sub_matrix = \
-                np.load("{0}/numpy_files/{1}/{2}-{3}-{4}.npy".\
-                        format(data_path, directory, name, i, j))
+                np.load("{0}/numpy_files/{1}-{2}-{3}-{4}.npy".\
+                        format(data_path, prefix, id, i, j))
             if not label:
                 list_matrix += separate_matrix(sub_matrix, length)
             else:
