@@ -3,7 +3,6 @@ import tensorflow
 import scipy.ndimage
 import tifffile 
 import os
-import matplotlib.pyplot as plt
 import PIL
 
 
