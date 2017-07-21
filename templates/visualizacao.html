@@ -60,18 +60,21 @@
         <div id="map-box">
             <div id="map"></div>
             <div id="dashboard">
-                <h3 style="margin-left:17%; margin-top:10px;">Datasets Anotados</h3>
+                <!--<h3 style="margin-left:17%; margin-top:10px;">Datasets Anotados</h3>
                 {% for dataset in labeled_datasets %}
                 <div class="dataset-cover">
                     <label><input type="checkbox" value="{{ dataset.id }}" class="dataset-check">{{ dataset.name }}</label>
                 </div>
-                {% endfor %}
+                {% endfor %} -->
                 <h3 style="margin-left:7%; margin-top:10px;">Classificadores</h3>
                 {% for classifier in classifiers %}
                 <div class="classifier-cover">
                     <label><input type="checkbox" value="{{ classifier.id }}" class="classifier-check">{{ classifier.name }}</label>
+                    <label class="color-box"></label>
                 </div>
                 {% endfor %}
+                <br/>
+                <h3 style="margin-left:17%; margin-top:10px;">Datasets</h3>
                 <select name="dataset_first" class="form-control optimization" style="width:93%;">
                     <option value="0">Selecione o Dataset Inicial</option>
                 {% for dataset in all_datasets %}
@@ -86,9 +89,11 @@
                 </select>
                 <br/>
                 <br/>
-                <a href="#" class="btn btn-primary" id="animation" style="margin-left:17%;">Aplicar</a>
+                <a href="#" class="btn btn-primary" id="apply-classifier" style="margin-left:17%;">Aplicar</a>
+                <a href="/visualizacao" class ="btn btn-danger" style="margin-left:17%;">Limpar</a>
             </div>
         </div>
+        <div class="modal"><img class="spinner" src="static/custom/img/spinner.gif"></div>
     </section>
     <footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-e" style="background-color: rgb(0, 0, 0); padding-top: 1.75rem; padding-bottom: 1.75rem;">
         <div class="container">
@@ -104,7 +109,7 @@
     <script src="static/assets/viewport-checker/jquery.viewportchecker.js"></script>
     <script src="static/assets/theme/js/script.js"></script>
     <script src="static/custom/js/visualizacao.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCT7Lpq6coge9vInGlwSe1SVkeb_NdvNVQ&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCT7Lpq6coge9vInGlwSe1SVkeb_NdvNVQ&callback=initMap&libraries=visualization"></script>
     <input name="animation" type="hidden">
 </body>
 
