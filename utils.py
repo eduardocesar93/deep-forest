@@ -1,23 +1,28 @@
 import numpy as np
 import tensorflow
 import scipy.ndimage
-import tifffile
+import tifffile 
 import os
 import PIL
 import fnmatch
 import math
+import time
 
 import keras
 from keras.models import Sequential
+from keras.models import load_model
 from keras.preprocessing.image import ImageDataGenerator
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
 
-separate_width = 500
+separate_width = 500 
 length_classification = 20
 data_path = "images"
+classification_path = "classifiers"
 
+def current_milli_time():
+    return int(round(time.time() * 1000))
 
 def save_image(path, prefix, id):
     """
@@ -35,7 +40,7 @@ def cut_and_save(directory, name, matrix, length):
         os.makedirs("{0}/numpy_files/".\
                     format(directory))
     except FileExistsError:
-        pass
+        pass     
     limit = max(1, int(len(matrix) / length))
     for i in range(limit):
         for j in range(limit):
@@ -76,10 +81,10 @@ def open_images(id, length, percent=[0,100], label=False):
     "{0}/numpy_files/".format(data_path)))))
     limit_min = int(total * percent[0] * 1.0 / 100)
     limit_max = int(total * percent[1] * 1.0 / 100)
-
+    
     for i in range(limit_min, limit_max):
         for j in range(total):
-
+               
             sub_matrix = \
                 np.load("{0}/numpy_files/{1}-{2}-{3}-{4}.npy".\
                         format(data_path, prefix, id, i, j))
@@ -107,11 +112,11 @@ def return_feature(directory, name, length, i, j):
                            v * length : v * length + length]
             mean_colors = sub_matrix_current.mean(0).mean(0)
             var_colors = sub_matrix_current.var(0).var(0)
-            list_features.append(mean_colors.tolist()
+            list_features.append(mean_colors.tolist() 
                                  + var_colors.tolist())
     return list_features
-
-
+            
+    
 def open_features(directory, name, total, length):
     list_features = list()
     for i in range(total):
@@ -132,10 +137,10 @@ def classification_criteria(directory, name, length, i, j):
                 sub_matrix[u * length : u * length + length,
                            v * length : v * length + length]
             list_classification.\
-                append(int((np.mean(sub_matrix_current) + 1) / 10))
+                append(int((np.mean(sub_matrix_current) + 1) / 10))               
     return list_classification
-
-
+    
+    
 def open_classifications(directory, name, total, length):
     list_classification = list()
     for i in range(total):
@@ -150,7 +155,7 @@ def success(predicted, result):
     compare = predicted == result
     count_true = 0
     count_false = 0
-    for equal in compare:
+    for equal in compare:  
         if equal:
             count_true += 1
         else:
@@ -183,19 +188,19 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
     ### Open Images #####
     train_data_x = open_images(dataset_id, length_classification, \
         percent=[percent_train_min, percent_train_max])
-
+                           
     test_data_x = open_images(dataset_id, length_classification, \
         percent=[percent_test_min, percent_test_max])
 
     train_data_y = open_images(dataset_id, length_classification, \
         percent=[percent_train_min, percent_train_max], label = True)
-
+                           
     test_data_y = open_images(dataset_id, length_classification, \
         percent=[percent_test_min, percent_test_max], label = True)
 
-
+                          
    #### Aplying classifier #####
-
+    
     batch_size = 32
     num_classes = 11
     epochs = 1
@@ -255,16 +260,16 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
         print('Using real-time data augmentation.')
         # This will do preprocessing and realtime data augmentation:
         datagen = ImageDataGenerator(
-            featurewise_center=False,
-            samplewise_center=False,
+            featurewise_center=False, 
+            samplewise_center=False,  
             featurewise_std_normalization=False,
-            samplewise_std_normalization=False,
+            samplewise_std_normalization=False, 
             zca_whitening=False,
-            rotation_range=0,
-            width_shift_range=0.1,
+            rotation_range=0, 
+            width_shift_range=0.1, 
             height_shift_range=0.1,
-            horizontal_flip=True,
-            vertical_flip=False)
+            horizontal_flip=True,  
+            vertical_flip=False) 
 
         # Compute quantities required for feature-wise normalization
         datagen.fit(train_data_x)
@@ -276,6 +281,17 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
              steps_per_epoch=train_data_x.shape[0] // batch_size,
              epochs=epochs,
              validation_data=(test_data_x, test_data_y))
+       ## Persist classifier ##
+       
+        current_time = current_milli_time()
+        try:
+             os.makedirs("{0}/".format(classification_path))
+        except FileExistsError:
+	        pass
+        model.save('./' + classification_path + '/' + str(current_time) + '.h5')
 
-
-
+#train_classifier(41, 43, 55, 57, 1, 20)       
+#train_classifier(41, 57, 53, 61, 1, 20) 
+#list = open_images(3, 20)
+#print ("{} {} {}".format(len(list), len(list[0]), len(list[0][0])))
+     
