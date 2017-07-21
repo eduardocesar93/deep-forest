@@ -30,7 +30,7 @@ def create_folders_if_not_exist():
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
     if not os.path.exists(UPLOAD_FOLDER + '/labels'):
-        os.makedirs(UPLOAD_FOLDER + '/labels') 
+        os.makedirs(UPLOAD_FOLDER + '/labels')
     if not os.path.exists('temp'):
         os.makedirs('temp')
 
@@ -114,8 +114,6 @@ def visualization():
     labeled_datasets = SESSION.query(Dataset)\
         .filter(Dataset.train == 1)\
         .all()
-
-    print(all_datasets)
 
     return render_template('visualizacao.html', classifiers=classifiers,
         all_datasets=all_datasets, labeled_datasets=labeled_datasets)
@@ -211,12 +209,16 @@ def add_dataset():
                 year=int(request.form['year']),
                 train=train,
                 image_name=image_name,
-                label_name=label_name)
+                label_name=label_name,
+                lat_inf=request.form['lat_inf'],
+                lat_sup=request.form['lat_sup'],
+                lng_inf=request.form['lng_inf'],
+                lng_sup=request.form['lng_sup'])
             SESSION.add(new_dataset)
             SESSION.commit()
             if train:
                 utils.save_image(label_path, "tree_cover", new_dataset.id)
-            utils.save_image(os.path.join(UPLOAD_FOLDER, image_name), "image", new_dataset.id)    
+            utils.save_image(os.path.join(UPLOAD_FOLDER, image_name), "image", new_dataset.id)
             return redirect(url_for('dashboard', success='true'))
         except Exception as err:
             raise(err)
@@ -242,7 +244,7 @@ def download_dataset():
 
 
 if __name__ == "__main__":
-    create_folders_if_not_exist()    
+    create_folders_if_not_exist()
     app.secret_key = 'FGV-EMAP 13410 Selva'
     app.config['SESSION_TYPE'] = 'filesystem'
     app.run(host='0.0.0.0', port=8080, debug=True)

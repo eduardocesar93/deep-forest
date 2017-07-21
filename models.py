@@ -17,6 +17,7 @@ class Classifier(BASE):
     accuracy = Column(String, nullable=False)
     password = Column(String)
     order_table = Column(Integer, nullable=False)
+    pickle_path = Column(String, nullable=True)
     locked = 0
 
     def __repr__(self):
@@ -34,6 +35,10 @@ class Dataset(BASE):
     name = Column(String, nullable=False)
     year = Column(Integer, nullable=False)
     train = Column(Integer, nullable=False)
+    lat_sup = Column(String, nullable=False)
+    lat_inf = Column(String, nullable=False)
+    lng_sup = Column(String, nullable=False)
+    lng_inf = Column(String, nullable=False)
     image_name = Column(String, nullable=False)
     label_name = Column(String, nullable=True)
 

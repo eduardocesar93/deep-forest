@@ -71,8 +71,6 @@ var printDeforestationAreas = function(map){
     }
 }
 
-
-
 function initMap() {
     var mapCenter = { lat: -7.5415477, lng: -61.781962 };
 

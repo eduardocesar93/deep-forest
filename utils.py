@@ -25,7 +25,8 @@ def save_image(path, prefix, id):
         and the prefix ('image', tree_cover').
     """
     image = tifffile.imread(path)
-    cut_and_save(data_path, "{0}-{1}".format(prefix, id), image, separate_width)
+    cut_and_save(data_path, "{0}-{1}".format(prefix, id),
+        image, separate_width)
 
 
 def cut_and_save(directory, name, matrix, length):
@@ -246,11 +247,6 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
 
     if not data_augmentation:
         print('Not using data augmentation.')
-        model.fit(x_train, train_data_y,
-                  batch_size=batch_size,
-                  epochs=epochs,
-                  validation_data=(train_data_x, test_data_y),
-                  shuffle=True)
     else:
         print('Using real-time data augmentation.')
         # This will do preprocessing and realtime data augmentation:
@@ -278,4 +274,16 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
              validation_data=(test_data_x, test_data_y))
 
 
-
+def classify_images(classifier, data_set_id_first, data_set_id_last):
+    first_image_list = open_images(data_set_id_first, length_classification)
+    last_image_list = open_images(data_set_id_last, length_classification)
+    forestation_level_first = classifier.predict(first_image_list)
+    forestation_level_last = classifier.predict(last_image_list)
+    first_image_list = None
+    last_image_list = None
+    deforestation_labels = list()
+    for i in range(len(forestation_level_first)):
+        deforestation_labels.append(forestation_level_first - forestation_level_last)
+    total_class_width = math.sqrt(len(deforestation_labels))
+    return compose_matrix(deforestation_labels,
+        total_class_width * length_classification, separate_width)
