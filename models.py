@@ -17,7 +17,7 @@ class Classifier(BASE):
     accuracy = Column(String, nullable=False)
     password = Column(String)
     order_table = Column(Integer, nullable=False)
-    pickle_path = Column(String, nullable=True)
+    model_path = Column(String, nullable=True)
     locked = 0
 
     def __repr__(self):
