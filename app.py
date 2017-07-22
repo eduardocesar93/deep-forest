@@ -221,6 +221,7 @@ def add_dataset():
             utils.save_image(os.path.join(UPLOAD_FOLDER, image_name), "image", new_dataset.id)
             return redirect(url_for('dashboard', success='true'))
         except Exception as err:
+            print(err)
             raise(err)
             return redirect(url_for('dashboard', fail='true'))
     else:
