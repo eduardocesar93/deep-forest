@@ -138,11 +138,6 @@ def add_classifier():
                 order_table=order)
             SESSION.add(new_classifier)
             SESSION.commit()
-
-            # __abrir a thread
-            #     external
-            # __ chamar a funcao que vc criou
-
             return redirect(url_for('dashboard', success='true'))
         except:
             return redirect(url_for('dashboard', fail='true'))

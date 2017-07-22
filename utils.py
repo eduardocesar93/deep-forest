@@ -164,14 +164,15 @@ def success(predicted, result):
     return count_true / (count_true + count_false)
 
 
-def compose_matrix(class_list, image_width,
-                   separate_width, length_classification):
+def compose_matrix(class_list, image_width):
     limit = int(image_width / length_classification)
     matrix = list()
+
     for i in range(limit):
         matrix.append(limit * [-1])
     row_block_length = int(separate_width / length_classification)
     num_block_row = int(image_width / separate_width)
+
     for i in range(len(class_list)):
         block_num = int(i / (row_block_length * row_block_length))
         u = block_num // num_block_row
@@ -299,8 +300,7 @@ def classify_images(classifier, data_set_id_first, data_set_id_last):
     for i in range(len(forestation_level_first)):
         deforestation_labels.append(forestation_level_first - forestation_level_last)
     total_class_width = math.sqrt(len(deforestation_labels))
-    return compose_matrix(deforestation_labels,
-        total_class_width * length_classification, separate_width)
+    return compose_matrix(deforestation_labels, total_class_width * length_classification)
 
 #train_classifier(41, 43, 55, 57, 1, 20)
 #train_classifier(41, 57, 53, 61, 1, 20)
