@@ -138,12 +138,11 @@ def add_classifier():
                 order_table=order)
             SESSION.add(new_classifier)
             SESSION.commit()
-            score = utils. train_classifier(40, 60, 80 , 90, int(request.form['dataset_first']))
-            classifier = SESSION.query(Classifier).filter_by(name=request.form['name']).first()
-            classifier.state = 2
-            classifier.accuracy = score[1]
-            SESSION.commit()
-            
+
+            # __abrir a thread
+            #     external
+            # __ chamar a funcao que vc criou
+
             return redirect(url_for('dashboard', success='true'))
         except:
             return redirect(url_for('dashboard', fail='true'))
@@ -227,7 +226,6 @@ def add_dataset():
             utils.save_image(os.path.join(UPLOAD_FOLDER, image_name), "image", new_dataset.id)
             return redirect(url_for('dashboard', success='true'))
         except Exception as err:
-            print(err)
             raise(err)
             return redirect(url_for('dashboard', fail='true'))
     else:

@@ -6,11 +6,9 @@ import os
 import PIL
 import fnmatch
 import math
-import time
 
 import keras
 from keras.models import Sequential
-from keras.models import load_model
 from keras.preprocessing.image import ImageDataGenerator
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Conv2D, MaxPooling2D
@@ -19,10 +17,7 @@ from keras import backend as K
 separate_width = 500
 length_classification = 20
 data_path = "images"
-classification_path = "classifiers"
 
-def current_milli_time():
-    return int(round(time.time() * 1000))
 
 def save_image(path, prefix, id):
     """
@@ -30,8 +25,7 @@ def save_image(path, prefix, id):
         and the prefix ('image', tree_cover').
     """
     image = tifffile.imread(path)
-    cut_and_save(data_path, "{0}-{1}".format(prefix, id),
-        image, separate_width)
+    cut_and_save(data_path, "{0}-{1}".format(prefix, id), image, separate_width)
 
 
 def cut_and_save(directory, name, matrix, length):
@@ -164,15 +158,14 @@ def success(predicted, result):
     return count_true / (count_true + count_false)
 
 
-def compose_matrix(class_list, image_width):
+def compose_matrix(class_list, image_width,
+                   separate_width, length_classification):
     limit = int(image_width / length_classification)
     matrix = list()
-
     for i in range(limit):
         matrix.append(limit * [-1])
     row_block_length = int(separate_width / length_classification)
     num_block_row = int(image_width / separate_width)
-
     for i in range(len(class_list)):
         block_num = int(i / (row_block_length * row_block_length))
         u = block_num // num_block_row
@@ -185,7 +178,7 @@ def compose_matrix(class_list, image_width):
 
 
 def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
-     percent_test_max, dataset_id):
+     percent_test_max, dataset_id, length_classification):
 
     ### Open Images #####
     train_data_x = open_images(dataset_id, length_classification, \
@@ -253,6 +246,11 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
 
     if not data_augmentation:
         print('Not using data augmentation.')
+        model.fit(x_train, train_data_y,
+                  batch_size=batch_size,
+                  epochs=epochs,
+                  validation_data=(train_data_x, test_data_y),
+                  shuffle=True)
     else:
         print('Using real-time data augmentation.')
         # This will do preprocessing and realtime data augmentation:
@@ -278,36 +276,19 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
              steps_per_epoch=train_data_x.shape[0] // batch_size,
              epochs=epochs,
              validation_data=(test_data_x, test_data_y))
-
-        ## Persist classifier ##
-
+             
+             
+       ## Persist classifier ##
+       
         current_time = current_milli_time()
-        try:
-             os.makedirs("{0}/".format(classification_path))
-        except FileExistsError:
-	        pass
-        model.save('./' + classification_path + '/' + str(current_time) + '.h5')
+        with open('/classifiers/' + current_time + '.pkl', 'wb') as fid:
+            cPickle.dump(model, fid)
 
-        score = model.evaluate(test_data_x, test_data_y, verbose=0)
-        # print('Test loss:', score[0])
-        # print('Test accuracy:', score[1]
-        return score
+        # load it again
+        # with open('my_dumped_classifier.pkl', 'rb') as fid:
+        #   gnb_loaded = cPickle.load(fid)
 
-def classify_images(classifier, data_set_id_first, data_set_id_last):
-    first_image_list = open_images(data_set_id_first, length_classification)
-    last_image_list = open_images(data_set_id_last, length_classification)
-    forestation_level_first = classifier.predict(first_image_list)
-    forestation_level_last = classifier.predict(last_image_list)
-    first_image_list = None
-    last_image_list = None
-    deforestation_labels = list()
-    for i in range(len(forestation_level_first)):
-        deforestation_labels.append(forestation_level_first - forestation_level_last)
-    total_class_width = math.sqrt(len(deforestation_labels))
-    return compose_matrix(deforestation_labels, total_class_width * length_classification)
+#train_classifier(0, 100, 0, 100, 2, 20) 
 
-#train_classifier(41, 43, 55, 57, 1, 20)
-#train_classifier(41, 57, 53, 61, 1, 20)
-#list = open_images(3, 20)
-#print ("{} {} {}".format(len(list), len(list[0]), len(list[0][0])))
+
 
