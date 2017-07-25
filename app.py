@@ -4,6 +4,7 @@ import os
 import zipfile
 import json
 import time
+import _thread
 from flask import Flask, request, redirect, url_for,\
     render_template, send_file
 from sqlalchemy import create_engine
@@ -49,6 +50,25 @@ def zipdir(path, ziph):
 def current_milli_time():
     return int(round(time.time() * 1000))
 
+
+def train_classifier_thread(percent_train_min, percent_train_max, percent_test_min,\
+       percent_test_max, dataset_id, classifier_name, new_classifier):
+
+    ENGINE_THREAD = create_engine("sqlite:///deep_forest.db", echo=True)
+    BASE.metadata.bind = ENGINE_THREAD
+    SESSION_THREAD = sessionmaker(bind=ENGINE_THREAD)()
+
+    # creates new classifier on database
+    SESSION_THREAD.add(new_classifier)
+    SESSION_THREAD.commit()
+
+    score = utils.train_classifier(percent_train_min, percent_train_max, percent_test_min,\
+       percent_test_max, dataset_id)
+    
+    classifier = SESSION_THREAD.query(Classifier).filter_by(name=classifier_name).first()
+    classifier.state = 2
+    classifier.accuracy = score[1]
+    SESSION_THREAD.commit()
 
 @app.route("/")
 def index():
@@ -136,15 +156,16 @@ def add_classifier():
                 state=1,
                 accuracy="-",
                 order_table=order)
-            SESSION.add(new_classifier)
-            SESSION.commit()
-            score = utils. train_classifier(40, 60, 80 , 90, int(request.form['dataset_first']))
-            classifier = SESSION.query(Classifier).filter_by(name=request.form['name']).first()
-            classifier.state = 2
-            classifier.accuracy = score[1]
-            SESSION.commit()
             
+            try:
+               _thread.start_new_thread( train_classifier_thread, (40, 42, 45, 47, int(request.form['dataset_first']), request.form['name'], new_classifier, ))
+            
+            except:
+               print ("Error: unable to start thread")
+           # while 1:
+           #    pass
             return redirect(url_for('dashboard', success='true'))
+
         except:
             return redirect(url_for('dashboard', fail='true'))
     else:
