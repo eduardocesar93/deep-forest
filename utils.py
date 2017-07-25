@@ -286,12 +286,13 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
              os.makedirs("{0}/".format(classification_path))
         except FileExistsError:
 	        pass
-        model.save('./' + classification_path + '/' + str(current_time) + '.h5')
+        model_path = './' + classification_path + '/' + str(current_time) + '.h5'
+        model.save(model_path)
 
         score = model.evaluate(test_data_x, test_data_y, verbose=0)
         # print('Test loss:', score[0])
         # print('Test accuracy:', score[1]
-        return score
+        return score, model_path
 
 def classify_images(classifier, data_set_id_first, data_set_id_last):
     first_image_list = open_images(data_set_id_first, length_classification)
