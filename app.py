@@ -8,7 +8,7 @@ import _thread
 from flask import Flask, request, redirect, url_for,\
     render_template, send_file
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from models import BASE, Classifier, Dataset
 import utils
 
@@ -21,7 +21,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ENGINE = create_engine("sqlite:///deep_forest.db", echo=True)
 BASE.metadata.bind = ENGINE
-SESSION = sessionmaker(bind=ENGINE)()
+SESSION = scoped_session(sessionmaker(bind=ENGINE))
 
 def secure_filename(filename):
     return filename # TODO
@@ -70,6 +70,11 @@ def train_classifier_thread(percent_train_min, percent_train_max, percent_test_m
     classifier.accuracy = score[1]
     classifier.model_path = model_path
     SESSION.commit()
+
+
+@app.teardown_request
+def remove_session(ex=None):
+    SESSION.remove()
 
 
 @app.route("/")
