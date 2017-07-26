@@ -121,6 +121,8 @@ def dashboard():
     classifiers = SESSION.query(Classifier).order_by('order_table').all()
     datasets = SESSION.query(Dataset).all()
     for classifier in classifiers:
+        if len(classifier.accuracy) > 5:
+            classifier.accuracy = classifier.accuracy[0:6]
         if classifier.password != "":
             classifier.locked = 1
         else:
@@ -132,7 +134,7 @@ def dashboard():
 @app.route("/visualizacao")
 def visualization():
     classifiers = SESSION.query(Classifier)\
-        .filter(Classifier.state == 1)\
+        .filter(Classifier.state == 2)\
         .order_by('order_table').all()
 
     all_datasets = SESSION.query(Dataset)\
@@ -277,6 +279,15 @@ def download_dataset():
                      attachment_filename="{0}.zip".format(dataset.name),
                      as_attachment=True)
 
+@app.route('/classificar-images')
+def classify_images():
+    classifier_id = request.args.get('classifier')
+    dataset_first_id = request.args.get('first')
+    dataset_last_id = request.args.get('last')
+    classifier = SESSION.query(Classifier).filter_by(id=int(classifier_id)).first()
+    model_path = classifier.model_path
+    deforestation_cover = utils.classify_images(model_path, dataset_first_id, dataset_last_id)
+    print(deforestation_cover)
 
 if __name__ == "__main__":
     create_folders_if_not_exist()

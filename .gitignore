@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *.ini
-
+*.py~
 # IDE related
 .idea/
 obj/

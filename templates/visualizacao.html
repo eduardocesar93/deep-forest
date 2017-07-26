@@ -69,7 +69,7 @@
                 <h3 style="margin-left:7%; margin-top:10px;">Classificadores</h3>
                 {% for classifier in classifiers %}
                 <div class="classifier-cover">
-                    <label><input type="checkbox" value="{{ classifier.id }}" class="classifier-check">{{ classifier.name }}</label>
+                    <label><input name="classifier" type="radio" value="{{ classifier.id }}" class="classifier-check">{{ classifier.name }}</label>
                     <label class="color-box"></label>
                 </div>
                 {% endfor %}

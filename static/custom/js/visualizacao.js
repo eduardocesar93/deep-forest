@@ -1,6 +1,8 @@
 var initBoxes = function(){
-	colorPalet = ["rgba(255,0,0,0.9)", "rgba(0,180,0,0.9)"]
-	colorPaletWithAlphaZero = ["rgba(255,0,0,0)", "rgba(0,180,0,0)"]
+	colorPalet = ["rgba(255,0,0,0.9)", "rgba(0,180,0,0.9)",
+                  "rgba(0,0,200,0.9)", "rgba(0,100,100,0.9)", "rgba(80,80,80,0.9)"]
+	colorPaletWithAlphaZero = ["rgba(255,0,0,0)", "rgba(0,180,0,0)",
+                               "rgba(0,0,200,0)", "rgba(0,100,100,0)", "rgba(80,80,80,0)"]
 	$colorBoxes = $('.color-box')
 
 	for(var i = 0; i < $colorBoxes.length; i++){
@@ -83,9 +85,21 @@ function initMap() {
 
     $('#apply-classifier').click(function(event){
         event.preventDefault();
-        $.when($('.modal').modal('toggle')).done(function () {
-            printDeforestationAreas(map)
-            $('.modal').modal('toggle');
-        });
+
+        dataset_first = $('select[name=dataset_first]').val()
+        dataset_last = $('select[name=dataset_last]').val()
+        classifier = $('input[name=classifier]:checked').val()
+
+        if (classifier && dataset_last && dataset_first){
+            $.ajax({
+                    url: "/classificar-images?classifier=" + classifier
+                    + "&first=" + dataset_first +
+                    "&last=" + dataset_last
+                });
+        }
+        // $.when($('.modal').modal('toggle')).done(function () {
+        //     printDeforestationAreas(map)
+        //     $('.modal').modal('toggle');
+        // });
     });
 }
