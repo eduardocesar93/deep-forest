@@ -359,16 +359,28 @@ def classify_images(model_path, data_set_id_first, data_set_id_last):
     first_image_list = None
     last_image_list = None
     deforestation_labels = list()
+
     for i in range(len(forestation_level_first)):
-        deforestation_labels.append(forestation_level_first - forestation_level_last)
+        label_returned = -1
+        prob_returned = -1
+        deforestation_labels.append(define_discrete_label(forestation_level_first[i]) -\
+            define_discrete_label(forestation_level_last[i]))
     total_class_width = math.sqrt(len(deforestation_labels))
     print("---Composing Matrix---")
     return compose_matrix(deforestation_labels, total_class_width * length_classification)
 
+def define_discrete_label(probs):
+    returned_label = -1
+    returned_prob = -1
+    for i in range(11):
+        if probs[i] > returned_prob:
+            returned_label = i
+            returned_prob = probs[i]
+    return returned_label
 
 #train_classifier(41, 43, 55, 57, 1, 20)
 #train_classifier(41, 57, 53, 61, 1, 20)
 #list = open_images(3, 20)
 #print ("{} {} {}".format(len(list), len(list[0]), len(list[0][0])))
 
-#utils.open_images(6, 20, label=False, save_tiff=True, map_param={'lat_sup': '0N', 'lng_sup': '70W', 'lat_inf':'10S', 'lng_inf':'60W'})
+#utils.open_images(7, 20, label=False, save_tiff=True, map_param={'lat_sup': '0N', 'lng_sup': '70W', 'lat_inf':'10S', 'lng_inf':'60W'})

@@ -288,6 +288,7 @@ def classify_images():
     model_path = classifier.model_path
     deforestation_cover = utils.classify_images(model_path, dataset_first_id, dataset_last_id)
     print(deforestation_cover)
+    return True
 
 if __name__ == "__main__":
     create_folders_if_not_exist()
