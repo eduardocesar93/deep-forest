@@ -167,7 +167,7 @@ def add_classifier():
                 order_table=order)
 
             try:
-               _thread.start_new_thread( train_classifier_thread, (40, 42, 45, 47, int(request.form['dataset_first']), request.form['name'], new_classifier, ))
+               _thread.start_new_thread( train_classifier_thread, (0, 48, 50, 100, int(request.form['dataset_first']), request.form['name'], new_classifier, ))
 
             except:
                print ("Error: unable to start thread")
@@ -284,11 +284,20 @@ def classify_images():
     classifier_id = request.args.get('classifier')
     dataset_first_id = request.args.get('first')
     dataset_last_id = request.args.get('last')
+    datasert_first = SESSION.query(Dataset).filter_by(id=int(dataset_first_id)).first()
     classifier = SESSION.query(Classifier).filter_by(id=int(classifier_id)).first()
     model_path = classifier.model_path
-    deforestation_cover = utils.classify_images(model_path, dataset_first_id, dataset_last_id)
-    print(deforestation_cover)
-    return True
+    return_dict = {
+        'lat_lng':  {
+            'lat_inf': datasert_first.lat_inf,
+            'lat_sup': datasert_first.lat_sup,
+            'lng_inf': datasert_first.lng_inf,
+            'lng_sup': datasert_first.lng_sup
+        },
+        'cover': utils.classify_images(model_path, dataset_first_id, dataset_last_id)
+    }
+
+    return json.dumps(return_dict)
 
 if __name__ == "__main__":
     create_folders_if_not_exist()
