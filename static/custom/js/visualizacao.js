@@ -61,8 +61,7 @@ var printDeforestationAreas = function(map, list_points, classifierIndex){
     currentColor = colorPalet[classifierIndex];
     currentColorZero = colorPaletWithAlphaZero[classifierIndex];
 
-    for (var i = 0 ; i < list_points[i].length; i++){
-        console.log(list_points[i]);
+    for (var i = 0 ; i < list_points.length; i++){
         var point = {
             location: new google.maps.LatLng(
                 list_points[i][0]['lat'],
@@ -72,8 +71,6 @@ var printDeforestationAreas = function(map, list_points, classifierIndex){
         heatMapData.push(point);
     }
 
-    console.log(currentColorZero);
-    console.log(currentColor);
     var heatmap = new google.maps.visualization.HeatmapLayer({
         data: heatMapData,
         gradient: [  currentColorZero,
@@ -85,15 +82,17 @@ var printDeforestationAreas = function(map, list_points, classifierIndex){
 }
 
 function initMap() {
-    var mapCenter = { lat: -7.5415477, lng: -61.781962 };
+    var mapCenter = { lat: -4.0042978, lng: -58.7201982 };
 
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
+        zoom: 6,
         center: mapCenter
     });
 
     initBoxes();
 
+
+    $('.spinner').removeClass('hidden');
     $('#apply-classifier').click(function(event){
         event.preventDefault();
 
@@ -113,12 +112,17 @@ function initMap() {
                         + "&first=" + dataset_first +
                         "&last=" + dataset_last,
                         dataType: 'json',
+                        beforeSend: function(){
+                            $('.modal').modal('toggle');
+                            console.log("Wait for response...");
+                        },
                         success: function(data){
-                            console.log("aqui");
-                            console.log(index);
                             list_points = convert_matrix(data);
-                            console.log(list_points);
                             printDeforestationAreas(map, list_points, index);
+                            console.log("Complete!");
+                        },
+                        complete: function(){
+                            $('.modal').modal('toggle');
                         }
                     });
                 }
