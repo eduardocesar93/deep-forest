@@ -90,7 +90,7 @@ def interpolation(i, j, total_i, total_j, lat_inf, lng_inf, lat_sup, lng_sup):
             'lng_sup': int_lng_sup}
 
 
-def open_images(id, length, percent=[0,100], label=False, save_tiff=False, map_param=False):
+def open_images(id, length, percent=[0,98], label=False, save_tiff=False, map_param=False):
     list_matrix = list()
     prefix = "image" if label == False else "tree_cover"
     total = int(math.sqrt(len(find("{0}-{1}-*".format(prefix, id), \
@@ -107,7 +107,7 @@ def open_images(id, length, percent=[0,100], label=False, save_tiff=False, map_p
             os.makedirs("images/tiff-file/")
         except FileExistsError:
             pass
-    for i in range(limit_min, limit_max):
+    for i in range(limit_min, limit_max + 1):
         for j in range(total):
             sub_matrix = \
                 np.load("{0}/numpy_files/{1}-{2}-{3}-{4}.npy".\
@@ -263,7 +263,7 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
        # The data, shuffled and split between train and test sets:
        print('x_train shape:', train_data_x.shape)
        print(train_data_x.shape[0], 'train samples')
-       print(train_data_x.shape[0], 'test samples')
+       print(test_data_x.shape[0], 'test samples')
 
        # Convert class vectors to binary class matrices.
        train_data_y = keras.utils.\
@@ -349,8 +349,11 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
 def classify_images(model_path, data_set_id_first, data_set_id_last):
     print("---Loading the model---")
     print("---Model loaded---")
-    classifier = load_model(model_path)
+    with tf.Session(graph = graph) as sess:
+        init = tf.initialize_all_variables()
     print("---Opening Images---")
+    sess.run(init)
+    classifier = load_model(model_path)
     first_image_list = open_images(int(data_set_id_first), length_classification)
     last_image_list = open_images(int(data_set_id_last), length_classification)
     print("---Predicting---")
