@@ -142,7 +142,7 @@
                                 <th hidden="hidden">Id</th>
                                 <th>Dataset</th>
                                 <th>Anotado</th>
-                                <th>Tamanho</th>
+                                <th hidden="hidden">Tamanho</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -156,7 +156,7 @@
                                 {% else %}
                                 <td contenteditable="false">Não</td>
                                 {% endif %}
-                                <td contenteditable="false">1</td>
+                                <td hidden="hidden" contenteditable="false">1</td>
                                 <td>
                                     <a href="download-dataset?id={{ dataset.id }}" download>
                                         <span class="glyphicon glyphicon-download-alt"></span>

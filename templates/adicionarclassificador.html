@@ -77,7 +77,7 @@
                         <select name="dataset_first" class="form-control" required oninvalid="this.setCustomValidity('Esse campo é obrigatório.')" oninput="setCustomValidity('')">
                             <option value="">Selecione</option>
                             {% for dataset in datasets %}
-                            <option value="{{ dataset.id }}">{{ dataset.name }} - {{ dataset.year }}</option>
+                            <option value="{{ dataset.id }}">{{ dataset.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
