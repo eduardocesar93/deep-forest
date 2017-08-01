@@ -21,7 +21,7 @@ length_classification = 20
 data_path = "images"
 classification_path = "classifiers"
 
-graph = tf.get_default_graph()
+default_graph = tf.get_default_graph()
 
 def current_milli_time():
     return int(round(time.time() * 1000))
@@ -90,7 +90,7 @@ def interpolation(i, j, total_i, total_j, lat_inf, lng_inf, lat_sup, lng_sup):
             'lng_sup': int_lng_sup}
 
 
-def open_images(id, length, percent=[0,100], label=False, save_tiff=False, map_param=False):
+def open_images(id, length, percent=[0,98], label=False, save_tiff=False, map_param=False):
     list_matrix = list()
     prefix = "image" if label == False else "tree_cover"
     total = int(math.sqrt(len(find("{0}-{1}-*".format(prefix, id), \
@@ -107,7 +107,7 @@ def open_images(id, length, percent=[0,100], label=False, save_tiff=False, map_p
             os.makedirs("images/tiff-file/")
         except FileExistsError:
             pass
-    for i in range(limit_min, limit_max):
+    for i in range(limit_min, limit_max + 1):
         for j in range(total):
             sub_matrix = \
                 np.load("{0}/numpy_files/{1}-{2}-{3}-{4}.npy".\
@@ -235,127 +235,130 @@ def compose_matrix(class_list, image_width):
     return matrix
 
 
-def train_classifier(percent_train_min, percent_train_max, percent_test_min,\
-     percent_test_max, dataset_id):
+def train_classifier(percent_train_min, percent_train_max, percent_test_min, percent_test_max, dataset_id):
 
-    with graph.as_default():
-       ### Open Images #####
-       train_data_x = open_images(dataset_id, length_classification, \
-           percent=[percent_train_min, percent_train_max])
+    
+    with default_graph.as_default():
+        ### Open Images #####
+        train_data_x = open_images(dataset_id, length_classification, \
+            percent=[percent_train_min, percent_train_max])
 
-       test_data_x = open_images(dataset_id, length_classification, \
-           percent=[percent_test_min, percent_test_max])
+        test_data_x = open_images(dataset_id, length_classification, \
+            percent=[percent_test_min, percent_test_max])
 
-       train_data_y = open_images(dataset_id, length_classification, \
-           percent=[percent_train_min, percent_train_max], label = True)
+        train_data_y = open_images(dataset_id, length_classification, \
+            percent=[percent_train_min, percent_train_max], label = True)
 
-       test_data_y = open_images(dataset_id, length_classification, \
-           percent=[percent_test_min, percent_test_max], label = True)
+        test_data_y = open_images(dataset_id, length_classification, \
+            percent=[percent_test_min, percent_test_max], label = True)
 
 
-      #### Aplying classifier #####
+       #### Aplying classifier #####
 
-       batch_size = 32
-       num_classes = 11
-       epochs = 1
-       data_augmentation = True
+        batch_size = 32
+        num_classes = 11
+        epochs = 1
+        data_augmentation = True
 
-       # The data, shuffled and split between train and test sets:
-       print('x_train shape:', train_data_x.shape)
-       print(train_data_x.shape[0], 'train samples')
-       print(train_data_x.shape[0], 'test samples')
+        # The data, shuffled and split between train and test sets:
+        print('x_train shape:', train_data_x.shape)
+        print(train_data_x.shape[0], 'train samples')
+        print(test_data_x.shape[0], 'test samples')
 
-       # Convert class vectors to binary class matrices.
-       train_data_y = keras.utils.\
-           to_categorical(train_data_y, num_classes)
-       test_data_y = keras.utils.\
-           to_categorical(test_data_y, num_classes)
+        # Convert class vectors to binary class matrices.
+        train_data_y = keras.utils.\
+            to_categorical(train_data_y, num_classes)
+        test_data_y = keras.utils.\
+            to_categorical(test_data_y, num_classes)
 
-       model = Sequential()
+        model = Sequential()
 
-       model.add(Conv2D(32, (3, 3), padding='same',
+        model.add(Conv2D(32,  (3, 3), padding='same',
                         input_shape=train_data_x.shape[1:]))
-       model.add(Activation('relu'))
-       model.add(Conv2D(32, (3, 3)))
-       model.add(Activation('relu'))
-       model.add(MaxPooling2D(pool_size=(2, 2)))
-       model.add(Dropout(0.25))
+        model.add(Activation('relu'))
+        model.add(Conv2D(32, (3, 3)))
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
 
-       model.add(Conv2D(64, (3, 3), padding='same'))
-       model.add(Activation('relu'))
-       model.add(Conv2D(64, (3, 3)))
-       model.add(Activation('relu'))
-       model.add(MaxPooling2D(pool_size=(2, 2)))
-       model.add(Dropout(0.25))
+        model.add(Conv2D(64, (3, 3), padding='same'))
+        model.add(Activation('relu'))
+        model.add(Conv2D(64, (3, 3)))
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.25))
 
-       model.add(Flatten())
-       model.add(Dense(512))
-       model.add(Activation('relu'))
-       model.add(Dropout(0.5))
-       model.add(Dense(num_classes))
-       model.add(Activation('softmax'))
+        model.add(Flatten())
+        model.add(Dense(512))
+        model.add(Activation('relu'))
+        model.add(Dropout(0.5))
+        model.add(Dense(num_classes))
+        model.add(Activation('softmax'))
 
-       # initiate RMSprop optimizer
-       opt = keras.optimizers.rmsprop(lr=0.0001, decay=1e-6)
+        # initiate RMSprop optimizer
+        opt = keras.optimizers.rmsprop(lr=0.0001, decay=1e-6)
 
-       # Let's train the model using RMSprop
-       model.compile(loss='categorical_crossentropy',
+        # Let's train the model using RMSprop
+        model.compile(loss='categorical_crossentropy',
                      optimizer=opt, metrics=['accuracy'])
 
-       if not data_augmentation:
-           print('Not using data augmentation.')
-       else:
-           print('Using real-time data augmentation.')
+                     
+        if not data_augmentation:
+            print('Not using data augmentation.')
+        else:
+            print('Using real-time data augmentation.')
 
-           # This will do preprocessing and realtime data augmentation:
-           datagen = ImageDataGenerator(
-               featurewise_center=False,
-               samplewise_center=False,
-               featurewise_std_normalization=False,
-               samplewise_std_normalization=False,
-               zca_whitening=False,
-               rotation_range=0,
-               width_shift_range=0.1,
+            # This will do preprocessing and realtime data augmentation:
+            datagen = ImageDataGenerator(
+                featurewise_center=False,
+                samplewise_center=False,
+                featurewise_std_normalization=False,
+                samplewise_std_normalization=False,
+                zca_whitening=False,
+                rotation_range=0,
+                width_shift_range=0.1,
                height_shift_range=0.1,
                horizontal_flip=True,
                vertical_flip=False)
 
+            # Compute quantities required for feature-wise normalization
+            datagen.fit(train_data_x)
 
-           # Compute quantities required for feature-wise normalization
-           datagen.fit(train_data_x)
+            # Fit the model on the batches generated by datagen.flow().
+            model.fit_generator\
+                 (datagen.flow(train_data_x, train_data_y, batch_size=batch_size), steps_per_epoch=train_data_x.shape[0] // batch_size, epochs=epochs,  validation_data=(test_data_x, test_data_y))
+            score = model.evaluate(test_data_x, test_data_y, verbose=0)
 
-           # Fit the model on the batches generated by datagen.flow().
-           model.fit_generator\
-	            (datagen.flow(train_data_x, train_data_y, batch_size=batch_size), steps_per_epoch=train_data_x.shape[0] // batch_size,
-	             epochs=epochs,  validation_data=(test_data_x, test_data_y))
-           score = model.evaluate(test_data_x, test_data_y, verbose=0)
+            ## Persist classifier ##
 
-           ## Persist classifier ##
-
-           current_time = current_milli_time()
-           try:
-                os.makedirs("{0}/".format(classification_path))
-           except FileExistsError:
-	           pass
-           model_path = './' + classification_path + '/' + str(current_time) + '.h5'
-           model.save(model_path)
+            current_time = current_milli_time()
+            try:
+                 os.makedirs("{0}/".format(classification_path))
+            except FileExistsError:
+                pass
+            model_path = './' + classification_path + '/' + str(current_time) + '.h5'
+            model.save(model_path)
 
 
-           # print('Test loss:', score[0])
-           # print('Test accuracy:', score[1]
-       return score, model_path
+        # print('Test loss:', score[0])
+        # print('Test accuracy:', score[1]
+        
+    return score, model_path
 
 
 def classify_images(model_path, data_set_id_first, data_set_id_last):
     print("---Loading the model---")
     print("---Model loaded---")
-    classifier = load_model(model_path)
     print("---Opening Images---")
     first_image_list = open_images(int(data_set_id_first), length_classification)
     last_image_list = open_images(int(data_set_id_last), length_classification)
     print("---Predicting---")
-    forestation_level_first = classifier.predict(first_image_list)
-    forestation_level_last = classifier.predict(last_image_list)
+    with tf.Session(graph=default_graph) as session:
+        init = tf.global_variables_initializer()
+        session.run(init)
+        classifier = load_model(model_path)
+        forestation_level_first = classifier.predict(first_image_list)
+        forestation_level_last = classifier.predict(last_image_list)
     first_image_list = None
     last_image_list = None
     deforestation_labels = list()

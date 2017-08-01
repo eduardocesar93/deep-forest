@@ -167,7 +167,7 @@ def add_classifier():
                 order_table=order)
 
             try:
-               _thread.start_new_thread( train_classifier_thread, (0, 48, 50, 100, int(request.form['dataset_first']), request.form['name'], new_classifier, ))
+               _thread.start_new_thread( train_classifier_thread, (0, 48, 50, 98, int(request.form['dataset_first']), request.form['name'], new_classifier, ))
 
             except:
                print ("Error: unable to start thread")
