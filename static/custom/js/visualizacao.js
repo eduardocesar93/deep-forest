@@ -1,6 +1,6 @@
-colorPalet = ["rgba(255,0,0,0.9)", "rgba(0,180,0,0.9)",
+colorPalet = ["rgba(0,180,0,0.9)", "rgba(255,0,0,0.9)",
                   "rgba(0,0,200,0.9)", "rgba(0,100,100,0.9)", "rgba(80,80,80,0.9)"]
-colorPaletWithAlphaZero = ["rgba(255,0,0,0)", "rgba(0,180,0,0)",
+colorPaletWithAlphaZero = ["rgba(0,180,0,0)", "rgba(255,0,0,0)",
                             "rgba(0,0,200,0)", "rgba(0,100,100,0)", "rgba(80,80,80,0)"]
 
 var initBoxes = function(){
