@@ -110,25 +110,25 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row param" hidde="hidden">
+                 <div class="row param" hidde="hidden">
                     <div class="col-xs-6 form-group sgd-param adadelta-param">
                         <label><b>Número de Épocas</b></label>
-                        <input class="form-control" type="number" value="10"/>
+                        <input class="form-control" type="number" value="10" name="epochs"/>
                     </div>
                     <div class="col-xs-6 form-group sgd-param adadelta-param">
                         <label><b>Tamanho do Batch</b></label>
-                        <input class="form-control" type="number" value="128"/>
+                        <input class="form-control" type="number" value="128" name="batch"/>
                     </div>
                     <div class="col-xs-6 form-group sgd-param adadelta-param">
                         <label><b>Função de Ativação</b></label>
-                        <select name="optimization_method" class="form-control" value="1">
+                        <select name="activation_function" class="form-control" value="1">
                             <option value="1">relu</option>
                             <option value="2">softmax</option>
                         </select>
                     </div>
                     <div class="col-xs-6 form-group sgd-param">
                         <label><b>Taxa de Aprendizagem</b></label>
-                        <input class="form-control" type="number" value="0.01"/>
+                        <input class="form-control" type="number" value="0.01" name="learning_rate"/>
                     </div>
                 </div>
                 <hr>

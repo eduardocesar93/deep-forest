@@ -10,6 +10,8 @@ bin/
 *.config
 *.pyproj
 .vscode/
+*.h5
+*.html~
 
 # Virtualenv
 venv/
