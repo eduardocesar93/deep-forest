@@ -53,13 +53,18 @@ var convert_matrix = function(matrix_dict){
         }
     }
 
-    return list_points
+    return [list_points, {'lat' : (lat_inf + lat_sup)/ 2, 'lng' : (lng_inf + lng_sup)/2 }]
 }
 
 var printDeforestationAreas = function(map, list_points, classifierIndex){
     heatMapData = []
     currentColor = colorPalet[classifierIndex];
     currentColorZero = colorPaletWithAlphaZero[classifierIndex];
+
+    max_lat = -10000;
+    min_lat = 10000;
+    max_lng = -10000;
+    min_lng = 10000;
 
     for (var i = 0 ; i < list_points.length; i++){
         var point = {
@@ -68,6 +73,19 @@ var printDeforestationAreas = function(map, list_points, classifierIndex){
                 list_points[i][0]['lng']),
             weight: list_points[i][1]
         };
+        console.log(list_points[i][0]['lat']);
+        if (list_points[i][0]['lat'] < min_lat){
+            min_lat = list_points[i][0]['lat'];
+        }
+        if (list_points[i][0]['lat'] > max_lat){
+            max_lat = list_points[i][0]['lat'];
+        }
+        if (list_points[i][0]['lng'] > max_lng){
+            max_lng = list_points[i][0]['lng'];
+        }
+        if (list_points[i][0]['lng'] < min_lng){
+            min_lng = list_points[i][0]['lng'];
+        }
         heatMapData.push(point);
     }
 
@@ -76,9 +94,11 @@ var printDeforestationAreas = function(map, list_points, classifierIndex){
         gradient: [  currentColorZero,
                      currentColor
                     ],
-        map: map
+        map: map,
+        radius: 50
     });
 
+    return { lat: (min_lat + max_lat)/2, lng: (min_lng + max_lng)/2 };
 }
 
 function initMap() {
@@ -89,8 +109,9 @@ function initMap() {
         center: mapCenter
     });
 
-    initBoxes();
+    map.setOptions({maxZoom: 13});
 
+    initBoxes();
 
     $('.spinner').removeClass('hidden');
     $('#apply-classifier').click(function(event){
@@ -117,8 +138,16 @@ function initMap() {
                             console.log("Wait for response...");
                         },
                         success: function(data){
-                            list_points = convert_matrix(data);
-                            printDeforestationAreas(map, list_points, index);
+                            converted_matrix = convert_matrix(data);
+                            list_points = converted_matrix[0];
+                            zoom = 12;
+                            latLngMinimal = printDeforestationAreas(map, list_points, index);
+                            if (latLngMinimal['lat'] != 0 || latLngMinimal['lng'] != 0){
+                                converted_matrix[1] = latLngMinimal;
+                                zoom = 13;
+                            }
+                            map.panTo(converted_matrix[1]);
+                            map.setZoom(zoom);
                             console.log("Complete!");
                         },
                         complete: function(){
