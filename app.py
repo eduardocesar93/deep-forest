@@ -52,7 +52,9 @@ def current_milli_time():
 
 
 def train_classifier_thread(percent_train_min, percent_train_max, percent_test_min,\
-       percent_test_max, dataset_id, classifier_name, new_classifier):
+       percent_test_max, dataset_id, classifier_name, new_classifier, optimization_method,
+       epochs=1, batch_size=32,
+       activation_function='relu', lr=0.0001):
 
     # ENGINE_THREAD = create_engine("sqlite:///deep_forest.db", echo=True)
     # BASE.metadata.bind = ENGINE_THREAD
@@ -63,7 +65,8 @@ def train_classifier_thread(percent_train_min, percent_train_max, percent_test_m
     SESSION.commit()
 
     score, model_path = utils.train_classifier(percent_train_min, percent_train_max, percent_test_min,\
-       percent_test_max, dataset_id)
+       percent_test_max, dataset_id, optimization_method, epochs=epochs, batch_size=batch_size,
+       activation_function=activation_function, lr=lr)
 
     classifier = SESSION.query(Classifier).filter_by(name=classifier_name).first()
     classifier.state = 2
@@ -170,16 +173,21 @@ def add_classifier():
                 dataset_first = int(request.form['dataset_first'])
                 name = request.form['name']
                 type_classifier = type_classifier=request.form['type_classifier']
-                optimization_method=int(request.form['optimization_method'])
+                optimization_method=request.form['optimization_method']
                 epochs = int(request.form['epochs'])
                 batch = int(request.form['batch'])
                 activation_function = request.form['activation_function']
-                learning_rate = int(request.form['learning_rate'])
-                
-                _thread.start_new_thread( train_classifier_thread, (0, 48, 50, 98, dataset_first, name , new_classifier, ))
+                learning_rate = float(request.form['learning_rate'])
+                args = (0, 48, 50, 98, dataset_first, name, new_classifier, optimization_method)
+                kwargs = {"epochs":epochs, "batch_size":batch,
+                          "activation_function": activation_function, "lr": learning_rate}
 
-            except:
-               print ("Error: unable to start thread")
+                _thread.start_new_thread(train_classifier_thread, args, kwargs=kwargs)
+
+            except Exception as err:
+               print("Error: unable to start thread")
+               print(err)
+               return redirect(url_for('dashboard', fail='true'))
            # while 1:
            #    pass
             return redirect(url_for('dashboard', success='true'))
@@ -287,6 +295,7 @@ def download_dataset():
                      mimetype="zip",
                      attachment_filename="{0}.zip".format(dataset.name),
                      as_attachment=True)
+
 
 @app.route('/classificar-images')
 def classify_images():

@@ -87,6 +87,8 @@
                             <option value="">Selecione</option>
                             <option value="1">Adadelta</option>
                             <option value="2">SGD</option>
+                            <option value="3">Adagrad</option>
+                            <option value="4">RMSprop</option>
                         </select>
                     </div>
                     <div class="col-xs-6 form-group">
@@ -122,8 +124,9 @@
                     <div class="col-xs-6 form-group sgd-param adadelta-param">
                         <label><b>Função de Ativação</b></label>
                         <select name="activation_function" class="form-control" value="1">
-                            <option value="1">relu</option>
-                            <option value="2">softmax</option>
+                            <option value="relu">relu</option>
+                            <option value="tanh">tanh</option>
+                            <option value="sigmoid">sigmoid</option>
                         </select>
                     </div>
                     <div class="col-xs-6 form-group sgd-param">

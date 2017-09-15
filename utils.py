@@ -235,9 +235,12 @@ def compose_matrix(class_list, image_width):
     return matrix
 
 
-def train_classifier(percent_train_min, percent_train_max, percent_test_min, percent_test_max, dataset_id):
+def train_classifier(percent_train_min, percent_train_max, percent_test_min,
+                     percent_test_max, dataset_id, optimization_method,
+                     epochs=1, batch_size=32, activation_function='relu',
+                     lr=0.0001):
 
-    
+
     with default_graph.as_default():
         ### Open Images #####
         train_data_x = open_images(dataset_id, length_classification, \
@@ -254,10 +257,11 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min, per
 
 
        #### Aplying classifier #####
-
-        batch_size = 32
+        activation = activation_function
+        batch_size = batch_size,
+        lr = lr
         num_classes = 11
-        epochs = 1
+        epochs = epochs
         data_augmentation = True
 
         # The data, shuffled and split between train and test sets:
@@ -275,34 +279,41 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min, per
 
         model.add(Conv2D(32,  (3, 3), padding='same',
                         input_shape=train_data_x.shape[1:]))
-        model.add(Activation('relu'))
+        model.add(Activation(activation_function))
         model.add(Conv2D(32, (3, 3)))
-        model.add(Activation('relu'))
+        model.add(Activation(activation_function))
         model.add(MaxPooling2D(pool_size=(2, 2)))
         model.add(Dropout(0.25))
 
         model.add(Conv2D(64, (3, 3), padding='same'))
-        model.add(Activation('relu'))
+        model.add(Activation(activation_function))
         model.add(Conv2D(64, (3, 3)))
-        model.add(Activation('relu'))
+        model.add(Activation(activation_function))
         model.add(MaxPooling2D(pool_size=(2, 2)))
         model.add(Dropout(0.25))
 
         model.add(Flatten())
         model.add(Dense(512))
-        model.add(Activation('relu'))
+        model.add(Activation(activation_function))
         model.add(Dropout(0.5))
         model.add(Dense(num_classes))
         model.add(Activation('softmax'))
 
         # initiate RMSprop optimizer
-        opt = keras.optimizers.rmsprop(lr=0.0001, decay=1e-6)
+        if int(optimizer) == 1:
+            opt = keras.optimizers.Adadelta(lr=lr, decay=1e-6)
+        elif int(optimizer) == 2:
+            opt = keras.optimizers.SGD(lr=lr, decay=1e-6)
+        elif int(optimizer) == 3:
+            opt = keras.optimizers.Adagrad(lr=lr, decay=1e-6)
+        else:
+            opt = keras.optimizers.rmsprop(lr=lr, decay=1e-6)
 
         # Let's train the model using RMSprop
         model.compile(loss='categorical_crossentropy',
                      optimizer=opt, metrics=['accuracy'])
 
-                     
+
         if not data_augmentation:
             print('Not using data augmentation.')
         else:
@@ -317,9 +328,9 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min, per
                 zca_whitening=False,
                 rotation_range=0,
                 width_shift_range=0.1,
-               height_shift_range=0.1,
-               horizontal_flip=True,
-               vertical_flip=False)
+                height_shift_range=0.1,
+                horizontal_flip=True,
+                vertical_flip=False)
 
             # Compute quantities required for feature-wise normalization
             datagen.fit(train_data_x)
@@ -342,7 +353,7 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min, per
 
         # print('Test loss:', score[0])
         # print('Test accuracy:', score[1]
-        
+
     return score, model_path
 
 
