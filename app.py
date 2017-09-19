@@ -175,14 +175,11 @@ def add_classifier():
                 type_classifier = type_classifier=request.form['type_classifier']
                 optimization_method=request.form['optimization_method']
                 epochs = int(request.form['epochs'])
-                batch = int(request.form['batch'])
+                batch_size = int(request.form['batch'])
                 activation_function = request.form['activation_function']
                 learning_rate = float(request.form['learning_rate'])
-                args = (0, 48, 50, 98, dataset_first, name, new_classifier, optimization_method)
-                kwargs = {"epochs":epochs, "batch_size":batch,
-                          "activation_function": activation_function, "lr": learning_rate}
-
-                _thread.start_new_thread(train_classifier_thread, args, kwargs=kwargs)
+                _thread.start_new_thread(train_classifier_thread, (0, 48, 50, 98, dataset_first, name, new_classifier, optimization_method,
+       epochs, batch_size, activation_function, learning_rate,))
 
             except Exception as err:
                print("Error: unable to start thread")
@@ -321,5 +318,5 @@ if __name__ == "__main__":
     create_folders_if_not_exist()
     app.secret_key = 'FGV-EMAP 13410 Selva'
     app.config['SESSION_TYPE'] = 'filesystem'
-    app.run(host='0.0.0.0', port=8080, debug=False)
+    app.run(host='0.0.0.0', port=8080, debug=True)
     # APP.run(host='192.168.25.177', port=9000, debug=False)

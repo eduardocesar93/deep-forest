@@ -258,7 +258,7 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,
 
        #### Aplying classifier #####
         activation = activation_function
-        batch_size = batch_size,
+        batch_size = batch_size
         lr = lr
         num_classes = 11
         epochs = epochs
@@ -300,11 +300,11 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,
         model.add(Activation('softmax'))
 
         # initiate RMSprop optimizer
-        if int(optimizer) == 1:
+        if int(optimization_method) == 1:
             opt = keras.optimizers.Adadelta(lr=lr, decay=1e-6)
-        elif int(optimizer) == 2:
+        elif int(optimization_method) == 2:
             opt = keras.optimizers.SGD(lr=lr, decay=1e-6)
-        elif int(optimizer) == 3:
+        elif int(optimization_method) == 3:
             opt = keras.optimizers.Adagrad(lr=lr, decay=1e-6)
         else:
             opt = keras.optimizers.rmsprop(lr=lr, decay=1e-6)
