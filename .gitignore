@@ -12,6 +12,7 @@ bin/
 .vscode/
 *.h5
 *.html~
+*.db
 
 # Virtualenv
 venv/

@@ -52,7 +52,7 @@ def current_milli_time():
 
 
 def train_classifier_thread(percent_train_min, percent_train_max, percent_test_min,\
-       percent_test_max, dataset_id, classifier_name, new_classifier, optimization_method,
+       percent_test_max, dataset_id, classifier_name, new_classifier, type_classifier, optimization_method,
        epochs=1, batch_size=32,
        activation_function='relu', lr=0.0001):
 
@@ -65,7 +65,7 @@ def train_classifier_thread(percent_train_min, percent_train_max, percent_test_m
     SESSION.commit()
 
     score, model_path = utils.train_classifier(percent_train_min, percent_train_max, percent_test_min,\
-       percent_test_max, dataset_id, optimization_method, epochs=epochs, batch_size=batch_size,
+       percent_test_max, dataset_id, type_classifier, optimization_method, epochs=epochs, batch_size=batch_size,
        activation_function=activation_function, lr=lr)
 
     classifier = SESSION.query(Classifier).filter_by(name=classifier_name).first()
@@ -178,7 +178,7 @@ def add_classifier():
                 batch_size = int(request.form['batch'])
                 activation_function = request.form['activation_function']
                 learning_rate = float(request.form['learning_rate'])
-                _thread.start_new_thread(train_classifier_thread, (0, 48, 50, 98, dataset_first, name, new_classifier, optimization_method,
+                _thread.start_new_thread(train_classifier_thread, (0, 48, 50, 98, dataset_first, name, new_classifier,type_classifier, optimization_method,
        epochs, batch_size, activation_function, learning_rate,))
 
             except Exception as err:

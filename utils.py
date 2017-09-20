@@ -236,7 +236,7 @@ def compose_matrix(class_list, image_width):
 
 
 def train_classifier(percent_train_min, percent_train_max, percent_test_min,
-                     percent_test_max, dataset_id, optimization_method,
+                     percent_test_max, dataset_id, type_classifier, optimization_method,
                      epochs=1, batch_size=32, activation_function='relu',
                      lr=0.0001):
 
@@ -259,6 +259,7 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,
        #### Aplying classifier #####
         activation = activation_function
         batch_size = batch_size
+        type_classifier = type_classifier
         lr = lr
         num_classes = 11
         epochs = epochs
@@ -277,27 +278,39 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,
 
         model = Sequential()
 
-        model.add(Conv2D(32,  (3, 3), padding='same',
-                        input_shape=train_data_x.shape[1:]))
-        model.add(Activation(activation_function))
-        model.add(Conv2D(32, (3, 3)))
-        model.add(Activation(activation_function))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(Dropout(0.25))
+        if (type_classifier == "CNN"):
+            print ("########### CNN ##############")
+            model.add(Conv2D(32,  (3, 3), padding='same',
+                            input_shape=train_data_x.shape[1:]))
+            model.add(Activation(activation_function))
+            model.add(Conv2D(32, (3, 3)))
+            model.add(Activation(activation_function))
+            model.add(MaxPooling2D(pool_size=(2, 2)))
+            model.add(Dropout(0.25))
 
-        model.add(Conv2D(64, (3, 3), padding='same'))
-        model.add(Activation(activation_function))
-        model.add(Conv2D(64, (3, 3)))
-        model.add(Activation(activation_function))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(Dropout(0.25))
+            model.add(Conv2D(64, (3, 3), padding='same'))
+            model.add(Activation(activation_function))
+            model.add(Conv2D(64, (3, 3)))
+            model.add(Activation(activation_function))
+            model.add(MaxPooling2D(pool_size=(2, 2)))
+            model.add(Dropout(0.25))
 
-        model.add(Flatten())
-        model.add(Dense(512))
-        model.add(Activation(activation_function))
-        model.add(Dropout(0.5))
-        model.add(Dense(num_classes))
-        model.add(Activation('softmax'))
+            model.add(Flatten())
+            model.add(Dense(512))
+            model.add(Activation(activation_function))
+            model.add(Dropout(0.5))
+            model.add(Dense(num_classes))
+            model.add(Activation('softmax'))
+        
+        elif (type_classifier == "Rede Neural MLP"):
+            print ("########### MLP ##############")
+            model.add(Dense(64, activation=activation_function, input_shape=train_data_x.shape[1:]))
+            model.add(Dropout(0.5))
+            model.add(Dense(64, activation=activation_function))
+            model.add(Dropout(0.5))
+            model.add(Flatten())
+            model.add(Dense(num_classes))
+            model.add(Activation('softmax'))
 
         # initiate RMSprop optimizer
         if int(optimization_method) == 1:
