@@ -45,6 +45,31 @@ $( document ).ready(function(){
             }
         });
 
+        $('.classifiers .table-info').click(function() {
+            modalId = $(this).parents('tr').index();
+            $row = $('.table-editable.classifiers tbody tr:eq(' + modalId + ')');
+            $name = $('.table-editable.classifiers tbody tr:eq(' + modalId + ') td:eq(1)');
+            $('.modal-name').html($name.html());
+            id = $row.find("td:eq(0)").html();
+            $.ajax({
+                url: "/obter-classificador?id=" + id,
+                dataType: 'json'
+            }).success(function(data){
+                $('.modal.classifiers-info .modal-body').html(
+                    "<span> <b>Nome</b>: " + data.name + "</span><br>" +
+                    "<span> <b>Tipo do Classificador</b>: " + data.type_classifier + "</span><br>" +
+                    "<span> <b>Método de Otimização</b>: " + data.optimization_method + "</span><br>" +
+                    "<span> <b>Função de Ativação</b>: " + data.activation_function + "</span><br>" +
+                    "<span> <b>Acurácia</b>: " + data.accuracy + "</span><br>" +
+                    "<span> <b>Status</b>: " + data.state + "</span><br>" +
+                    "<span> <b>Tamanho do Batch</b>: " + data.batch + "</span><br>" +
+                    "<span> <b>Taxa de Aprendizagem</b>: " + data.learning_rate + "</span><br>" +
+                    "<span> <b>Número de Épocas</b>: " + data.number_epochs + "</span><br>"
+                );
+                $('.modal.classifiers-info').modal('toggle');
+            });
+        });
+
         $('.datasets .table-remove').click(function() {
             modalId = $(this).parents('tr').index();
             $name = $('.table-editable.datasets tbody tr:eq(' + modalId + ') td:eq(1)');

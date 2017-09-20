@@ -19,6 +19,10 @@ class Classifier(BASE):
     order_table = Column(Integer, nullable=False)
     model_path = Column(String, nullable=True)
     locked = 0
+    number_epochs = Column(String, nullable=True)
+    batch = Column(String, nullable=True)
+    activation_function = Column(String, nullable=True)
+    learning_rate = Column(String, nullable=True)
 
     def __repr__(self):
         return "<Classifier(name={0}, dataset={1}, type_classifier={2},\
