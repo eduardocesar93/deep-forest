@@ -101,6 +101,33 @@ def delete_classifier():
         return "false"
 
 
+@app.route("/obter-classificador")
+def get_classifier():
+    id_value = request.args.get('id')
+    classifier = SESSION.query(Classifier).filter_by(id=int(id_value)).first()
+    if int(classifier.optimization_method) == 1:
+        opt = "Adadelta"
+    elif int(classifier.optimization_method) == 2:
+        opt = "SGD"
+    elif int(classifier.optimization_method) == 3:
+        opt = "Adagrad"
+    else:
+        opt = "RMSProp"
+
+    classifier_dict = {
+        "name": classifier.name,
+        "type_classifier": classifier.type_classifier,
+        "optimization_method": opt,
+        "state": "Em treino" if classifier.state else "Treinado",
+        "accuracy": classifier.accuracy,
+        "number_epochs": classifier.number_epochs,
+        "batch": classifier.batch,
+        "activation_function": classifier.activation_function,
+        "learning_rate": classifier.learning_rate
+    }
+    return json.dumps(classifier_dict)
+
+
 @app.route("/deletar-dataset")
 def delete_dataset():
     id_value = request.args.get('id')
@@ -167,7 +194,12 @@ def add_classifier():
                 password=password,
                 state=1,
                 accuracy="-",
-                order_table=order)
+                order_table=order,
+                number_epochs=request.form['epochs'],
+                batch=request.form['batch'],
+                activation_function=request.form['activation_function'],
+                learning_rate=request.form['learning_rate']
+            )
 
             try:
                 dataset_first = int(request.form['dataset_first'])
