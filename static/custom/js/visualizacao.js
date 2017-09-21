@@ -1,7 +1,8 @@
-colorPalet = ["rgba(0,180,0,0.9)", "rgba(255,0,0,0.9)",
-                  "rgba(0,0,200,0.9)", "rgba(0,100,100,0.9)", "rgba(80,80,80,0.9)"]
+colorPalet = ["rgba(0,180,0,0.9)", "rgba(255,0,0,0.9)", "rgba(0,0,200,0.9)", "rgba(0,100,100,0.9)",
+              "rgba(80,80,80,0.9)", "rgba(50,100,200,0.9)", "rgba(200,200,30,0.9)", "rgba(200,200,200,0.9)"]
 colorPaletWithAlphaZero = ["rgba(0,180,0,0)", "rgba(255,0,0,0)",
-                            "rgba(0,0,200,0)", "rgba(0,100,100,0)", "rgba(80,80,80,0)"]
+                            "rgba(0,0,200,0)", "rgba(0,100,100,0)", "rgba(80,80,80,0)",
+                            "rgba(50,100,200,0)", "rgba(200,200,30,0)", "rgba(200,200,200,0)"]
 
 var initBoxes = function(){
 
@@ -19,9 +20,9 @@ var interpolation = function(i, j, total_i, total_j, lat_inf, lng_inf, lat_sup, 
     int_lng_inf = ((total_j - j - 1)* lng_sup + (j + 1) * lng_inf) / (total_j)
 
     return {
-            'lat' : (int_lat_inf + int_lat_sup) / 2,
-            'lng' : (int_lng_inf + int_lng_sup) / 2
-        }
+        'lat' : (int_lat_inf + int_lat_sup) / 2,
+        'lng' : (int_lng_inf + int_lng_sup) / 2
+    }
 };
 
 var angle_to_decimal = function(angle){
