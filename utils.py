@@ -304,9 +304,9 @@ def train_classifier(percent_train_min, percent_train_max, percent_test_min,
 
         elif (type_classifier == "Rede Neural MLP"):
             print ("########### MLP ##############")
-            model.add(Dense(1000, activation=activation_function, input_shape=train_data_x.shape[1:]))
+            model.add(Dense(128, activation=activation_function, input_shape=train_data_x.shape[1:]))
             model.add(Dropout(0.01))
-            model.add(Dense(2000, activation=activation_function))
+            model.add(Dense(256, activation=activation_function))
             model.add(Dropout(0.01))
             model.add(Flatten())
             model.add(Dense(num_classes))
