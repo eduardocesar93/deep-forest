@@ -60,7 +60,7 @@ $( document ).ready(function(){
                     "<span> <b>Tipo do Classificador</b>: " + data.type_classifier + "</span><br>" +
                     "<span> <b>Método de Otimização</b>: " + data.optimization_method + "</span><br>" +
                     "<span> <b>Função de Ativação</b>: " + data.activation_function + "</span><br>" +
-                    "<span> <b>Acurácia</b>: " + String(data.accuracy).substring(0, 5) + "</span><br>" +
+                    "<span> <b>Acurácia</b>: " + String(data.accuracy).substring(0, 6) + "</span><br>" +
                     "<span> <b>Status</b>: " + data.state + "</span><br>" +
                     "<span> <b>Tamanho do Batch</b>: " + data.batch + "</span><br>" +
                     "<span> <b>Taxa de Aprendizagem</b>: " + data.learning_rate + "</span><br>" +
