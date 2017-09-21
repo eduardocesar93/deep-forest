@@ -67,12 +67,14 @@
                 </div>
                 {% endfor %} -->
                 <h3 style="margin-left:7%; margin-top:10px;">Classificadores</h3>
-                {% for classifier in classifiers %}
-                <div class="classifier-cover">
-                    <label><input name="classifier" type="radio" value="{{ classifier.id }}" class="classifier-check">{{ classifier.name }}</label>
-                    <label class="color-box"></label>
+                <div class="classifier-list">
+                    {% for classifier in classifiers %}
+                    <div class="classifier-cover">
+                        <label><input name="classifier" type="radio" value="{{ classifier.id }}" class="classifier-check">{{ classifier.name }}</label>
+                        <label class="color-box"></label>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
                 <br/>
                 <h3 style="margin-left:17%; margin-top:10px;">Datasets</h3>
                 <select name="dataset_first" class="form-control optimization" style="width:93%;">
@@ -89,8 +91,8 @@
                 </select>
                 <br/>
                 <br/>
-                <a href="#" class="btn btn-primary" id="apply-classifier" style="margin-left:17%;">Aplicar</a>
-                <a href="/visualizacao" class ="btn btn-danger" style="margin-left:17%;">Limpar</a>
+                <a href="#" class="btn btn-primary" id="apply-classifier" style="margin-left:24%;">Aplicar</a>
+                <a href="/visualizacao" class ="btn btn-danger" style="margin-left:24%;">Limpar</a>
             </div>
         </div>
         <div class="modal"><img class="spinner" src="static/custom/img/spinner.gif"></div>
