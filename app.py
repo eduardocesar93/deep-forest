@@ -118,7 +118,7 @@ def get_classifier():
         "name": classifier.name,
         "type_classifier": classifier.type_classifier,
         "optimization_method": opt,
-        "state": "Em treino" if classifier.state else "Treinado",
+        "state": "Em treino" if int(classifier.state) == 1 else "Treinado",
         "accuracy": classifier.accuracy,
         "number_epochs": classifier.number_epochs,
         "batch": classifier.batch,
