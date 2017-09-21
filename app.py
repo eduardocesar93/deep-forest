@@ -350,5 +350,5 @@ if __name__ == "__main__":
     create_folders_if_not_exist()
     app.secret_key = 'FGV-EMAP 13410 Selva'
     app.config['SESSION_TYPE'] = 'filesystem'
-    app.run(host='0.0.0.0', port=80, debug=False)
+    app.run(host='0.0.0.0', port=8000, debug=False)
     # APP.run(host='192.168.25.177', port=9000, debug=False)
