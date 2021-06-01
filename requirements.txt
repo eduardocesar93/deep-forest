@@ -91,7 +91,7 @@ tifffile==0.12.1
 toolz==0.8.0
 tornado==4.3
 traitlets==4.2.1
-urllib3==1.13.1
+urllib3==1.26.5
 Werkzeug==0.12.2
 widgetsnbextension==1.2.3
 wrapt==1.10.10
