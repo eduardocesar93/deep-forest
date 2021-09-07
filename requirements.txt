@@ -53,7 +53,7 @@ pandas==0.18.1
 patsy==0.4.1
 pexpect==4.1.0
 pickleshare==0.7.2
-Pillow==3.1.2
+Pillow==8.3.2
 plainbox==0.25
 protobuf==3.3.0
 ptyprocess==0.5.1
