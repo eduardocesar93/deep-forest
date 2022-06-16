@@ -45,7 +45,7 @@ nbformat==4.0.1
 neovim==0.1.13
 networkx==1.11
 nltk==3.2.1
-notebook==4.2.1
+notebook==6.4.12
 numpy==1.11.0
 oauthlib==1.0.3
 padme==1.1.1
