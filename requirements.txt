@@ -15,7 +15,7 @@ decorator==4.0.10
 entrypoints==0.2.2
 Flask==0.12.2
 greenlet==0.4.11
-html5lib==0.9999999
+html5lib==0.999999999
 httplib2==0.9.1
 idna==2.0
 ipykernel==4.3.1
